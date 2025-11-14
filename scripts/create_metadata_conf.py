@@ -218,6 +218,8 @@ def main():
         output_dir = Path("workflow_metadata")
         output_dir.mkdir(parents=True, exist_ok=True)
         output_file = output_dir / f"{filename}"
+        with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
+            gh.write(f"filename={output_file}")
         format_cfg_file(output_file, organised_metadata)
         print(f"Saving metadata file as {output_file}...  SUCCESSFUL")
     else:

@@ -25,18 +25,63 @@ jobs:
       - name: create metadata file
         id: create-file
         env:
-          ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: |
               ${{ github.event.issue.body }}
           # pipe preseves newline properties for multilines
-          ISSUE_SUBMITTER: ${{ github.event.issue.user.login }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: |
-          python scripts/create_metadata_conf.py
+        run: python scripts/create_metadata_conf.py
 
+      - name: check if file exists
+        id: exists
+        run: |
+          if git ls-tree -r HEAD --name-only | grep -q "${{ steps.create-file.outputs.filename }}"; then
+            echo "exists=true" >> GITHUB_OUTPUT
+            echo "exists=true"
+          else
+            echo "exists=false" >> GITHUB_OUTPUT
+            echo "exists=false"
+          fi
+
+      - name: commit new file
+        if: steps.exists.outputs.exists == 'false'
+        run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
 
           git add *.cfg
           git commit -m "New workflow metadata file added from issue #${{ github.event.issue.number }}"
-          git push
+          git push origin main
+      - name: check diff
+        id: diff
+        if: ${{ steps.exists.outputs.exists }} == 'true'
+        run: |
+          if git diff --quiet HEAD -- ${{ steps.create-file.outputs.filename}}; then
+            echo "changed=false" >> GITHUB_OUTPUT
+          else
+            echo "changed=true" >> GITHUB_OUTPUT
+          fi
+
+      - name: create PR 
+        if: ${{ steps.diff.outputs.changed }} == 'true'
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: | 
+          branch="update-metadata-${{ github.run_id }}"
+          git checkout -b "$branch"
+          
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+
+          git add *.cfg
+          git commit -m "New workflow metadata file added from issue #${{ github.event.issue.number }}"
+          git push origin "$branch"
+          
+          gh pr create \
+            --title "Request to update existing metadata from issue #${{ github.event.issue.number }}" \
+            --body "Request to update existing metadata configuration file from issue form:
+                    -----------------------------------------------------
+                    User: ${{ github.actor }} 
+                    Issue title: ${{ github.event.issue.title }}
+                    Issue ID: #${{ github.event.issue.number }}
+                    Filename: ${{ steps.create-file.outputs.filename }}"  \
+            --base main \
+            --head $(git rev-parse --abbrev-ref HEAD)
