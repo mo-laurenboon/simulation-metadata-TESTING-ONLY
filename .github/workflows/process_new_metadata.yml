@@ -34,6 +34,24 @@ jobs:
           # pipe preseves newline properties for multilines
         run: python scripts/create_metadata_conf.py
 
+      - name: return issues to user
+        if: steps.create-file.outcome == 'failure'
+        run: |
+          gh issue comment "$NUMBER" --body "$BODY"
+          echo "NOTE: Script failure has occured due to user input error. The user has been notified and instructed to 
+          resubmit a corrected form. No further action required..."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: >
+            Your metadata file contains incorrect or improperly formatted fields. 
+            Please re submit you form and ammend the following issues:
+            ${{ steps.create-file.outputs.warnings }}.
+
+            If you believe this to be an error, please contact a member of the CDDS team.
+
+            Thank you for your contribution.
+
       - name: check if file exists
         id: exists
         run: |

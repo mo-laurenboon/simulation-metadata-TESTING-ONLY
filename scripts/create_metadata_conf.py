@@ -14,14 +14,14 @@ def get_issue():
     """
     Extracts information from the submitted issue.
 
-        :returns: Issue body, labels, number, title and author as a dictionary.
+        :returns: Issue body as a dictionary.
     """
     return {
         'body': os.environ.get('ISSUE_BODY'),
     }
 
 
-def create_meta_dict(match):
+def create_meta_dict(match: list) -> dict:
     """
     Generates a dictionary format from the loaded issue body and cleans the key-value pairs to ensure consistent 
     formatting prior to sanity checks.
@@ -67,7 +67,7 @@ def create_meta_dict(match):
     return meta_dict
 
 
-def list_warnings(warnings, warning):
+def list_warnings(warnings: list, warning: str) -> list[str]:
     """
     Creates a list of warnings.
 
@@ -80,7 +80,7 @@ def list_warnings(warnings, warning):
     return warnings
     
 
-def validate_meta_content(meta_dict, warnings):
+def validate_meta_content(meta_dict: dict, warnings: list) -> list[str]:
     """
     Vaidates the metadta dictionary contents.
 
@@ -123,7 +123,7 @@ def validate_meta_content(meta_dict, warnings):
     return warnings
 
 
-def create_filename(meta_dict, warnings):
+def create_filename(meta_dict: dict, warnings: list) -> tuple[str, list[str]]:
     """
     Generates a filename based off of the input model workflow id and mass ensemble member.
 
@@ -145,7 +145,7 @@ def create_filename(meta_dict, warnings):
     return filename, warnings
 
 
-def sort_to_categories(meta_dict):
+def sort_to_categories(meta_dict: dict) -> dict:
     """
     Sorts metadata dictionary into appropriate categories.
 
@@ -179,7 +179,7 @@ def sort_to_categories(meta_dict):
     return organised_metadata
 
 
-def format_cfg_file(output_file, organised_metadata):
+def format_cfg_file(output_file: Path, organised_metadata: dict) -> None:
     """
     Write the required metadata to a structured output file.
 
@@ -195,7 +195,7 @@ def format_cfg_file(output_file, organised_metadata):
                 f.write("\n")
 
 
-def main():
+def main() -> None:
     """
     Holds the main body of the script.
     """
@@ -215,7 +215,6 @@ def main():
 
     # Create output file
     filename, warnings = create_filename(meta_dict, warnings)
-    print(filename)
     if not warnings:
         print("Validating issue form inputs...  SUCCESSFUL")
         output_dir = Path("workflow_metadata")
@@ -229,6 +228,8 @@ def main():
         print("Validating issue form inputs...  FAILED")
         for warning in warnings:
             print(f" - {warning}")
+        with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
+            gh.write(f"warnings={warnings}")
         sys.exit(1)
 
 
