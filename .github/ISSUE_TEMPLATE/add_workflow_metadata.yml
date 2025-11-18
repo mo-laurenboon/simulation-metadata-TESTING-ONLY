@@ -13,7 +13,7 @@ body:
     id: issue_kind
     attributes:
       label: Issue Type
-      description: Create new or modify existing metadata
+      description: Create new or modify existing metadata.
       options:
         - "New"
         - "Modify"
@@ -25,7 +25,7 @@ body:
     id: model_workflow_id
     attributes:
       label: Model Workflow ID
-      description: Model workflow identifier 
+      description: Model workflow identifier.
       placeholder: "e.g. u-aw310"
     validations:
       required: true
@@ -34,7 +34,7 @@ body:
     id: mip
     attributes:
       label: Activity ID (MIP)
-      description: Activity identifier (MIP) 
+      description: Activity identifier (MIP).
       placeholder: "e.g. CMIP"
     validations:
       required: true
@@ -43,7 +43,7 @@ body:
     id: experiment_id
     attributes:
       label: Experiment ID
-      description: Experiment identifier
+      description: Experiment identifier.
       placeholder: "e.g. piControl"
     validations:
       required: true
@@ -52,7 +52,7 @@ body:
     id: model_id
     attributes:
       label: Model ID
-      description: Short name identifying the model (also known as source ID)
+      description: Short name identifying the model (also known as source ID).
       placeholder: "e.g. UKESM1-0-LL"
     validations:
       required: true
@@ -61,7 +61,7 @@ body:
     id: variant_label
     attributes:
       label: Variant label
-      description: Variant label
+      description: Variant label.
       placeholder: "e.g. r1i1p1f2"
     validations:
       required: true
@@ -70,7 +70,7 @@ body:
     id: start_date
     attributes:
       label: Start Date
-      description: Start date for processing in the format yyyy-mm-ddTHH:MM:SSZ
+      description: Start date for processing in the format yyyy-mm-ddTHH:MM:SSZ.
       placeholder: "e.g. 2000-01-01T00:00:00Z"
     validations:
       required: true
@@ -79,7 +79,7 @@ body:
     id: end_date
     attributes:
       label: End Date
-      description: End date for processing in the format yyyy-mm-ddTHH:MM:SSZ
+      description: End date for processing in the format yyyy-mm-ddTHH:MM:SSZ.
       placeholder: "e.g. 2001-01-01T00:00:00Z"
     validations:
       required: true
@@ -88,7 +88,7 @@ body:
     id: base_date
     attributes:
       label: Base Date
-      description: Base date in the format yyyy-mm-ddTHH:MM:SSZ
+      description: Base date in the format yyyy-mm-ddTHH:MM:SSZ.
       placeholder: "e.g. 1850-01-01T00:00:00Z"
     validations:
       required: true
@@ -98,8 +98,7 @@ body:
     attributes:
       label: Branch Method
       description: |
-        Branching Method: "standard" (has a parent simulation) or "no parent". For standard branch types, parent 
-        information is required: see below.
+        Branching Method: "standard" (has a parent simulation) or "no parent". For standard branch types, parent information is required: see below.
       options:
         - "standard"
         - "no parent"
@@ -110,8 +109,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        The fields below are required only if the selected branch method is "standard", for "no parent" branches, 
-        please disregard this section...
+
+        The fields below are required only if the selected branch method is "standard", for "no parent" branches, please disregard this section...
 
         -----------------------------------------------------------------------------------------
 
@@ -121,7 +120,7 @@ body:
       label: Child Branch Date
       description: |
         The date in this simulation where initial conditions from parent were applied. 
-        Please use the format yyyy-mm-ddTHH:MM:SSZ
+        Please use the format yyyy-mm-ddTHH:MM:SSZ.
       placeholder: "e.g. 1960-01-01T00:00:00Z"
 
   - type: input #CONDITIONAL ON BRANCH METHOD
@@ -130,53 +129,55 @@ body:
       label: Parent Branch Date
       description: |
         The date in the parent simulation from which initial conditions were taken. 
-        Please use the format yyyy-mm-ddTHH:MM:SSZ
+        Please use the format yyyy-mm-ddTHH:MM:SSZ.
       placeholder: "e.g. 1960-01-01T00:00:00Z"
 
   - type: input #CONDITIONAL ON BRANCH METHOD
     id: parent_experiment_id
     attributes:
       label: Parent Experiment ID
-      description: Parent experiment identifier
+      description: Parent experiment identifier.
       placeholder: "e.g. piControl-spinup"
 
   - type: input #CONDITIONAL ON BRANCH METHOD
     id: parent_mip
     attributes:
       label: Parent Activity ID (MIP)
-      description: Parent activity identifier
+      description: Parent activity identifier.
       placeholder: "e.g. CMIP"
 
   - type: input #CONDITIONAL ON BRANCH METHOD
     id: parent_model_id
     attributes:
       label: Parent Model ID
-      description: Parent model identifier (also known as parent source ID)
+      description: Parent model identifier (also known as parent source ID).
       placeholder: "e.g. UKESM1-0-LL"
 
   - type: input #CONDITIONAL ON BRANCH METHOD
     id: parent_time_units
     attributes:
       label: Parent Time Units
-      description: Time units used in the parent model
+      description: Time units used in the parent model.
       placeholder: "e.g. days since 1850-01-01"
 
   - type: input #CONDITIONAL ON BRANCH METHOD
     id: parent_variant_label
     attributes:
       label: Parent Variant Label
-      description: Label of the specific variant of the parent experiment 
+      description: Label of the specific variant of the parent experiment.
       placeholder: "e.g. r1i1p1f2"
 
   - type: markdown
     attributes:
-      value: -----------------------------------------------------------------------------------------
+      value: |
+        
+        -----------------------------------------------------------------------------------------
 
   - type: dropdown
     id: calendar
     attributes:
       label: Calendar Type
-      description: Type of calendar used
+      description: Type of calendar used.
       options:
         - "360_day"
         - "gregorian"
@@ -188,7 +189,7 @@ body:
     id: institution_id
     attributes:
       label: Institution ID
-      description: Institution identifier
+      description: Institution identifier.
       options:
         - "MOHC"
         - "NERC"
@@ -200,7 +201,7 @@ body:
     id: mip_era
     attributes:
       label: MIP Era
-      description: MIP era
+      description: MIP era.
       options:
         - "CMIP7"
       default: 0
@@ -220,7 +221,7 @@ body:
     id: mass_data_class
     attributes:
       label: Mass Data Class
-      description: Root of the location of input dataset on MASS
+      description: Root of the location of input dataset on MASS.
       options:
         - "crum"
         - "ens"
@@ -231,8 +232,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        The field below is required only if the selected mass data class is "ens", for "crum" data classes, 
-        please disregard this section...
+
+        #The field below is required only if the selected mass data class is "ens", for "crum" data classes, please disregard this section...
 
         -----------------------------------------------------------------------------------------
 
@@ -240,8 +241,10 @@ body:
     id: mass_ensemble_member
     attributes:
       label: Mass Ensemble Member ID
-      description: Mass ensemble member identifier
+      description: Mass ensemble member identifier.
 
   - type: markdown
     attributes:
-      value: -----------------------------------------------------------------------------------------
+      value: |
+        
+        -----------------------------------------------------------------------------------------
