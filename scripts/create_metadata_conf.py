@@ -172,7 +172,7 @@ def sort_to_categories(meta_dict: dict) -> dict:
             misc_dict[key] = value
 
     # Re map organised keys as nested dictionaries
-    organised_metadata["[metadata]"] = meta_dict
+    organised_metadata["[metadata]"] = metadata_dict
     organised_metadata["[data]"] = data_dict
     organised_metadata["[misc]"] = misc_dict
 
@@ -215,21 +215,27 @@ def main() -> None:
 
     # Create output file
     filename, warnings = create_filename(meta_dict, warnings)
+    
     if not warnings:
         print("Validating issue form inputs...  SUCCESSFUL")
         output_dir = Path("workflow_metadata")
         output_dir.mkdir(parents=True, exist_ok=True)
         output_file = output_dir / f"{filename}"
+
         with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
             gh.write(f"filename={output_file}")
+
         format_cfg_file(output_file, organised_metadata)
         print(f"Saving metadata file as {output_file}...  SUCCESSFUL")
+
     else:
         print("Validating issue form inputs...  FAILED")
         for warning in warnings:
             print(f" - {warning}")
+
         with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
             gh.write(f"warnings={warnings}")
+
         sys.exit(1)
 
 
