@@ -1,7 +1,7 @@
 name: "Add/Modify Workflow Metadata"
 description: Add or modify metadata for a CDDS workflow
 title: "Add/Modify Workflow Metadata: <Type model_workflow_id here>"
-labels: ['metadata']
+labels: ['metadata_entry']
 body:
 
   - type: markdown
