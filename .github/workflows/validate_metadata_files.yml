@@ -1,0 +1,22 @@
+# (C) British Crown Copyright 2025, Met Office.
+# Please see LICENSE.md for license details.
+
+name: "Process new metadata entry"
+on:
+  schedule: 
+    - cron: 0 0 * * *
+
+jobs:
+  validate-metadata:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@main
+        
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      
+      - name: validate metadata
+        run: python scripts/validate_metadata_conf.py
