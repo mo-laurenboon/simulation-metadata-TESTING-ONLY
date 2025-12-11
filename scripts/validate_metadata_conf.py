@@ -1,7 +1,6 @@
 # (C) British Crown Copyright 2025, Met Office.
 # Please see LICENSE.md for license details.
-"""
-Scan workflow metadata files and validate their structure and contents.
+"""Scan workflow metadata files and validate their structure and contents.
 
 This script checks for missing sections, unexpected keys, and invalid values
 in workflow configuration files.
@@ -33,11 +32,12 @@ REGEX_DICT = {
 
 
 def get_metadata_files() -> list[str]:
-    """
-    Creates a list of all existing cfg files to be checked.
+    """Creates a list of all existing cfg files to be checked.
 
-    :returns: List of cfg files to be checked.
-    :rtype: list[str]
+    Returns
+    -------
+    list[str]
+        List of cfg files to be checked.
     """
     glob_string = Path("workflow_metadata/*.cfg")
     cfg_files = glob.glob(str(glob_string))
@@ -46,17 +46,21 @@ def get_metadata_files() -> list[str]:
 
 
 def validate_structure(config: configparser, result: dict, file: str) -> dict:
-    """
-    Validates the structure of a single .cfg file.
+    """Validates the structure of a single .cfg file.
 
-    :param config: The config parser.
-    :type config: configparser
-    :param result: The dictionary containing the details of any validation failures.
-    :type result: dict
-    :param file: The file being validated.
-    :type file: str
-    :returns: The dictionary containing the details of any validation failures.
-    :rtype: dict
+    Parameters
+    ----------
+    config : configparser
+        The config parser.
+    result : dict
+        The dictionary containing the details of any validation failures.
+    file : str
+        The file being validated.
+
+    Returns
+    -------
+    dict
+        The dictionary containing the details of any validation failures.
     """
     file_results = result[file]
     sections_in_config = set(config.sections())
@@ -88,17 +92,21 @@ def validate_structure(config: configparser, result: dict, file: str) -> dict:
 
 
 def validate_required_fields(config: configparser, result: dict, file: str) -> dict:
-    """
-    Validates the contents of the required fields for a single .cfg file.
+    """Validates the contents of the required fields for a single .cfg file.
 
-    :param config: The config parser.
-    :type config: configparser
-    :param result: The dictionary containing the details of any validation failures.
-    :type result: dict
-    :param file: The file being validated.
-    :type file: str
-    :returns: The dictionary containing the details of any validation failures.
-    :rtype: dict
+    Parameters
+    ----------
+    config : configparser
+        The config parser.
+    result : dict
+        The dictionary containing the details of any validation failures.
+    file : str
+        The file being validated.
+
+    Returns
+    -------
+    dict
+        The dictionary containing the details of any validation failures.
     """
     file_results = result[file]
     missing_values = set()
@@ -136,17 +144,21 @@ def validate_required_fields(config: configparser, result: dict, file: str) -> d
 
 
 def validate_field_inputs(config: configparser, result: dict, file: str) -> dict:
-    """
-    Validates the inputs of a single .cfg file.
+    """Validates the inputs of a single .cfg file.
 
-    :param config: The config parser.
-    :type config: configparser
-    :param result: The dictionary containing the details of any validation failures.
-    :type result: dict
-    :param file: The file being validated.
-    :type file: str
-    :returns: The dictionary containing the details of any validation failures.
-    :rtype: dict
+    Parameters
+    ----------
+    config : configparser
+        The config parser.
+    result : dict
+        The dictionary containing the details of any validation failures.
+    file : str
+        The file being validated.
+
+    Returns
+    -------
+    dict
+        The dictionary containing the details of any validation failures.
     """
     file_results = result[file]
     invalid_values = set()
@@ -187,11 +199,12 @@ def validate_field_inputs(config: configparser, result: dict, file: str) -> dict
 
 
 def create_failure_report(result: dict) -> None:
-    """
-    Prints back any validation errors to the user.
+    """Prints back any validation errors to the user.
 
-    :param result: The dictionary containing the details of any validation failures.
-    :type result: dict
+    Parameters
+    ----------
+    result : dict
+        The dictionary containing the details of any validation failures.
     """
     success = True
     print("\nFILE VALIDATION FAILURE REPORT:\n")
@@ -213,9 +226,7 @@ def create_failure_report(result: dict) -> None:
 
 
 def main() -> None:
-    """
-    Holds the main body of the script.
-    """
+    """Holds the main body of the script."""
     result = {}
 
     cfg_files = get_metadata_files()
