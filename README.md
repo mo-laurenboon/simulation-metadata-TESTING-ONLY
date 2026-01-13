@@ -5,4 +5,4 @@
 
 This CDDS simulation metadata repository is designed to process and store CMIP7 workflow metadata. If you have a new workflow that you wish to register, please fill out the issue form marked 'Add/Modify Workflow Metadata'. Upon form completion, you will receive a notification from our GitHub actions bot notifying you of your submission. If you wish to view the workflow metadata currently stored in the database you can do so here: [CMIP7 Workflow Metadata](https://ukncsp.github.io/CDDS-simulation-metadata/ "A link to our GitHub pages"). Note that this table only consists key metadata: to view the full metadata, click the link shown on the model workflow ID of interest.
 
-Please note that any new additions may take up to a few minutes to become available to view and search on [CMIP7 Workflow Metadata](https://ukncsp.github.io/CDDS-simulation-metadata/ "A link to our GitHub pages").
+Please note that any new additions may take up to an hour to become available to view and search on [CMIP7 Workflow Metadata](https://ukncsp.github.io/CDDS-simulation-metadata/ "A link to our GitHub pages").

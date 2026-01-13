@@ -3,12 +3,10 @@
 
 name: "Generate and deploy webview"
 on:
-  workflow_run:
-    workflows: ["Process new metadata entry"]
-    types:
-      - completed
+  schedule:
+    - cron: '0 * * * *'
   workflow_dispatch:
-  
+
 jobs:
   generate-and-deploy:
     runs-on: ubuntu-latest
