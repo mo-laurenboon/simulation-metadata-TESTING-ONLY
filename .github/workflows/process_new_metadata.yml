@@ -75,7 +75,7 @@ jobs:
           git push origin main
 
           gh issue comment "$ISSUE" --body "$BODY"
-          gh issue close --repo "$REPO"
+          gh issue close --repo "$REPO" --comment "Closing issue $ISSUE" "$ISSUE"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
@@ -136,7 +136,7 @@ jobs:
         if: steps.diff.outputs.changed == 'false'
         run: |
           gh issue comment "$ISSUE" --body "$BODY"
-          gh issue close --repo "$REPO"
+          gh issue close --repo "$REPO" --comment "Closing issue $ISSUE" "$ISSUE"
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
