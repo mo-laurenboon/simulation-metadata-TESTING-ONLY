@@ -3,11 +3,10 @@
 
 name: "Generate variable lists"
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - "workflow_metadata/*.cfg"
+  workflow_run:
+    workflows: ["Process new metadata entry"]
+    types:
+      - completed
   workflow_dispatch: 
 
 jobs:
@@ -32,7 +31,8 @@ jobs:
         run: |
           FILE=$(git show --name-only --pretty="" HEAD | head -n 1)
           echo "last committed file --> $FILE"
-          grep -v "parent_experiment_id = " $FILE | grep "experiment_id = " | read _ _ EXPERIMENT
+          grep -v "parent_experiment_id = " $FILE | grep "experiment_id = " | read var1 var2 var3
+          echo "var1 -> $var1, var2 -> $var2, var3 -> $var3
           echo "experiment --> $EXPERIMENT"
           echo "experiment=$EXPERIMENT" >> GITHUB_OUTPUT
 
@@ -41,7 +41,7 @@ jobs:
         run: |
           DATA_REQ=reference_information/dr-1.2.2.2_all.json
           MAPPINGS=reference_information/mappings.json
-          python scripts/generate_variable_lists.py $DATA_REQ $MAPPINGS ${{ steps.get-commit.outputs.experiment }}
+          python scripts/generate_variable_lists.py "$DATA_REQ" "$MAPPINGS" "${{ steps.get-commit.outputs.experiment }}"
 
       - name: commit and push
         run: |
