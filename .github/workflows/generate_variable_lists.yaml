@@ -1,0 +1,49 @@
+# (C) British Crown Copyright 2026, Met Office.
+# Please see LICENSE.md for license details.
+
+name: "Process new metadata entry"
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'workflow_metadata/**'
+
+jobs:
+  generate-variable-lists:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: get commit
+        id: get-commit
+        run: |
+          FILE=$(git show --name-only --pretty="" HEAD | head -n 1)
+          LINE=$(grep -v "parent_experiment_id = " $FILE | grep "experiment_id = ")
+          set --$LINE | "experiment=$3" >> GITHUB_OUTPUT
+
+      - name: create variable list
+        id: create-variable-list
+        run: |
+          DATA_REQ=reference_information/dr-1.2.2.2_all.json
+          MAPPINGS=reference_information/mappings.json
+          python scripts/generate_variable_lists.py $DATA_REQ $MAPPINGS ${{ steps.get-commit.outputs.experiment }}
+
+      - name: commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+
+          git add *.txt
+          git commit -m "New variable list file added for experiment ${{ steps.get-commit.outputs.experiment }}"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
