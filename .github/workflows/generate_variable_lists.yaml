@@ -7,7 +7,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'workflow_metadata/*.cfg'
+      - "workflow_metadata/*.cfg"
   workflow_dispatch: 
 
 jobs:
@@ -28,8 +28,10 @@ jobs:
         id: get-commit
         run: |
           FILE=$(git show --name-only --pretty="" HEAD | head -n 1)
+          echo "last committed file --> $FILE"
           LINE=$(grep -v "parent_experiment_id = " $FILE | grep "experiment_id = ")
-          set --$LINE | "experiment=$3" >> GITHUB_OUTPUT
+          set --$LINE | "experiment=$3" >> GITHUB_OUTPUT 
+          echo "experiment --> $3"
 
       - name: create variable list
         id: create-variable-list
