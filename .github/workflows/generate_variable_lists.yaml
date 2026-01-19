@@ -33,8 +33,9 @@ jobs:
           FILE=$(git show --name-only --pretty="" HEAD | head -n 1)
           echo "last committed file --> $FILE"
           LINE=$(grep -v "parent_experiment_id = " $FILE | grep "experiment_id = ")
-          set --$LINE | "experiment=$3" >> GITHUB_OUTPUT 
-          echo "experiment --> $3"
+          read _ _ EXPERIMENT "$LINE"
+          echo "experiment --> $EXPERIMENT"
+          echo "experiment=$EXPERIMENT" >> GITHUB_OUTPUT
 
       - name: create variable list
         id: create-variable-list
