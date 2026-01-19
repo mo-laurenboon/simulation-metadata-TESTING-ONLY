@@ -130,7 +130,7 @@ def set_priority_comments(experiment_dict: dict, experiment: str) -> dict[str, s
     for level, variables in priority_dict.items():
         if level in IGNORED_PRIORITIES:
             for variable in variables:
-                priority_comments[variable] = f" # priority={"medium" if level == "med" else "low"}"
+                priority_comments[variable] = f" # priority={'medium' if level == 'med' else 'low'}"
 
     return priority_comments
 
@@ -390,7 +390,7 @@ def generate_variable_lists() -> None:
     mappings_dict = open_source_jsons(Path(args.mappings))
 
     # Create output file path.
-    outdir = Path(f"variables_glb/{experiment_dict["Header"]["dreq content version"]}")
+    outdir = Path(f"variables_glb/{experiment_dict['Header']['dreq content version']}")
     os.makedirs(outdir, exist_ok=True)
 
     # Loop over all listed experiments.
