@@ -34,7 +34,7 @@ jobs:
           LINE=$(grep -v "parent_experiment_id = " $FILE | grep "experiment_id = ")
           read _ _ EXPERIMENT <<< "$LINE"
           echo "experiment --> $EXPERIMENT"
-          echo "experiment=$EXPERIMENT" >> GITHUB_OUTPUT
+          echo "experiment=$EXPERIMENT" >> $GITHUB_OUTPUT
 
       - name: create variable list
         id: create-variable-list
