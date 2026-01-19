@@ -32,8 +32,7 @@ jobs:
         run: |
           FILE=$(git show --name-only --pretty="" HEAD | head -n 1)
           echo "last committed file --> $FILE"
-          LINE=$(grep -v "parent_experiment_id = " $FILE | grep "experiment_id = ")
-          read _ _ EXPERIMENT "$LINE"
+          grep -v "parent_experiment_id = " $FILE | grep "experiment_id = " | read _ _ EXPERIMENT
           echo "experiment --> $EXPERIMENT"
           echo "experiment=$EXPERIMENT" >> GITHUB_OUTPUT
 
