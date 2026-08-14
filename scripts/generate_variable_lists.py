@@ -433,6 +433,9 @@ def reformat_variable_names(
         if frequency == "yr":
             comment.insert(0, "Yearly variables unable to be processed at this time")
 
+        if not stream:
+            comment.insert(0, "No stream information available")
+
         # Filter out any non global variables
         if region == "glb":
             new_variable_name = (f"{realm}/{variable_name}_{branding}@{frequency}:{stream}" if stream else
