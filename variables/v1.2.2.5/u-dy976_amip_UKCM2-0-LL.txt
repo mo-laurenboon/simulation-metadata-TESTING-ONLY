@@ -112,6 +112,7 @@ aerosol/so2_tavg-al-hxy-u@mon:ap4  # approved
 aerosol/wetdust_tavg-u-hxy-u@mon:ap4  # approved
 atmos/albisccp_tavg-u-hxy-cl@day:ap6  # approved
 atmos/albisccp_tavg-u-hxy-cl@mon:ap5  # approved
+atmos/clisccp_tavg-p7c-hxy-air@day:ap6  # approved
 atmos/clisccp_tavg-p7c-hxy-air@mon:ap5  # approved
 atmos/clivi_tavg-u-hxy-u@day:ap6  # approved
 atmos/clivic_tavg-u-hxy-u@day:ap6  # approved
@@ -133,6 +134,7 @@ atmos/pctisccp_tavg-u-hxy-cl@day:ap6  # approved
 atmos/pctisccp_tavg-u-hxy-cl@mon:ap5  # approved
 atmos/pfull_tavg-al-hxy-u@day:ap6  # approved
 atmos/pfull_tavg-al-hxy-u@mon:ap4  # approved
+atmos/phalf_tavg-alh-hxy-u@day:ap6  # approved
 atmos/phalf_tavg-alh-hxy-u@mon:ap4  # approved
 atmos/prc_tavg-u-hxy-u@day:ap6  # approved
 atmos/prsn_tavg-u-hxy-u@3hr:ap8  # approved
@@ -356,7 +358,6 @@ ocean/mlotstsq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #atmos/clic_tavg-al-hxy-u@mon:ap5  # embargoed
 #atmos/climodis_tavg-u-hxy-u@mon:ap5  # embargoed
 #atmos/clis_tavg-al-hxy-u@mon:ap5  # embargoed
-#atmos/clisccp_tavg-p7c-hxy-air@day:ap6  # embargoed
 #atmos/clivi_tpt-u-hs-u@subhr:apt  # embargoed
 #atmos/clivimodis_tavg-u-hxy-u@mon:ap5  # embargoed
 #atmos/clmisr_tavg-h16-hxy-air@mon:ap5  # embargoed
@@ -404,7 +405,6 @@ ocean/mlotstsq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #atmos/parasolRefl_tavg-u-hxy-sea@day:ap6  # embargoed
 #atmos/parasolRefl_tavg-u-hxy-sea@mon:ap5  # embargoed
 #atmos/pfull_tpt-al-hs-u@subhr:apt  # embargoed
-#atmos/phalf_tavg-alh-hxy-u@day:ap6  # embargoed
 #atmos/phalf_tpt-alh-hs-u@subhr:apt  # embargoed
 #atmos/pr_tpt-u-hs-u@subhr:apt  # embargoed
 #atmos/pr_tpt-u-hxy-u@6hr:ap7  # embargoed
@@ -729,7 +729,7 @@ ocean/mlotstsq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #seaIce/ts_tavg-u-hxy-si@mon:ap5  # known-issue, embargoed
 #aerosol/emiisop_tavg-u-hxy-u@mon:ap4  # known-issue, embargoed
 #atmos/ta_tavg-al-hxy-u@mon:ap5  # known-issue, embargoed
-seaIce/sicompstren_tavg-u-hxy-si@mon:inm/icemod  # known-issue, approved, priority=medium
+#seaIce/sicompstren_tavg-u-hxy-si@mon:inm/icemod  # known-issue, embargoed, priority=medium
 #seaIce/sidragtop_tavg-u-hxy-si@mon:ap5  # known-issue, embargoed, priority=medium
 #seaIce/siforcecoriolx_tavg-u-hxy-si@mon:inm/icemod  # known-issue, embargoed, priority=medium
 #seaIce/siforcecorioly_tavg-u-hxy-si@mon:inm/icemod  # known-issue, embargoed, priority=medium

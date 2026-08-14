@@ -81,6 +81,8 @@ ocean/masscello_tavg-ol-hxy-sea@mon:onm/grid-T  # approved
 ocean/mlotst_tavg-u-hxy-sea@mon:onm/grid-T  # approved
 ocean/so_tavg-ol-hxy-sea@mon:onm/grid-T  # approved
 ocean/sos_tavg-u-hxy-sea@mon:onm/grid-T  # approved
+ocean/tauuo_tavg-u-hxy-sea@mon:onm/grid-U  # approved
+ocean/tauvo_tavg-u-hxy-sea@mon:onm/grid-V  # approved
 ocean/thetao_tavg-ol-hxy-sea@mon:onm/grid-T  # approved
 ocean/thkcello_tavg-ol-hxy-sea@mon:onm/grid-T  # approved
 ocean/tos_tavg-u-hxy-sea@mon:onm/grid-T  # approved
@@ -157,17 +159,23 @@ atmos/cltisccp_tavg-u-hxy-u@day:ap6  # approved
 atmos/cltisccp_tavg-u-hxy-u@mon:ap5  # approved
 atmos/clwvi_tavg-u-hxy-u@day:ap6  # approved
 atmos/co2_tavg-al-hxy-u@mon:ap4  # approved
+atmos/co23D_tavg-al-hxy-u@mon:ap5  # approved
 atmos/epfy_tavg-p39-hy-air@day:ap6  # approved
 atmos/epfy_tavg-p39-hy-air@mon:ap5  # approved
 atmos/epfz_tavg-p39-hy-air@day:ap6  # approved
 atmos/epfz_tavg-p39-hy-air@mon:ap5  # approved
 #atmos/fco2all_tavg-u-hxy-u@mon  # no-mapping-found
 atmos/fco2antt_tavg-u-hxy-u@mon:ap5  # approved
+atmos/fco2fos_tavg-u-hxy-u@mon:ap5  # approved
+atmos/hfls_tavg-u-hxy-u@3hr:ap8  # approved
 atmos/hfls_tavg-u-hxy-u@day:ap6  # approved
+atmos/hfss_tavg-u-hxy-u@3hr:ap8  # approved
 atmos/hfss_tavg-u-hxy-u@day:ap6  # approved
 atmos/hur_tavg-al-hxy-u@mon:ap5  # approved
 atmos/hus_tavg-al-hxy-u@mon:ap5  # approved
 atmos/intuaw_tavg-u-hxy-u@mon:ap5  # approved
+atmos/loadbc_tavg-u-hxy-u@day:ap6  # approved
+atmos/loadoa_tavg-u-hxy-u@day:ap6  # approved
 atmos/pctisccp_tavg-u-hxy-cl@day:ap6  # approved
 atmos/pctisccp_tavg-u-hxy-cl@mon:ap5  # approved
 atmos/pfull_tavg-al-hxy-u@day:ap6  # approved
@@ -235,13 +243,21 @@ land/cSoil_tavg-u-hxy-lnd@mon:ap5  # approved
 land/cStem_tavg-u-hxy-lnd@mon:ap5  # approved
 land/cVeg_tavg-u-hxy-lnd@mon:ap5  # approved
 land/evspsblpot_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fAnthDisturb_tavg-u-hxy-lnd@mon:ap5  # approved
 land/fBNF_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fDeforestToProduct_tavg-u-hxy-lnd@mon:ap5  # approved
 land/fHarvestToAtmos_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fNAnthDisturb_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fNfert_tavg-u-hxy-lnd@mon:ap5  # approved
 land/fNgas_tavg-u-hxy-lnd@mon:ap5  # approved
 land/fNleach_tavg-u-hxy-lnd@mon:ap5  # approved
 land/fNloss_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fNnetmin_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fNProduct_tavg-u-hxy-lnd@mon:ap5  # approved
 land/fNup_tavg-u-hxy-lnd@mon:ap5  # approved
 land/fNVegSoil_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fProductDecomp_tavg-u-hxy-lnd@mon:ap5  # approved
+land/fVegSoil_tavg-u-hxy-lnd@mon:ap5  # approved
 land/gpp_tavg-u-hxy-lnd@mon:ap5  # approved
 land/grassFrac_tavg-u-hxy-u@mon:ap5  # approved
 land/mrro_tavg-u-hxy-lnd@day:ap6  # approved
@@ -308,6 +324,7 @@ ocnBgchem/spco2_tavg-u-hxy-sea@mon:onm/diad-T  # approved
 seaIce/evspsbl_tavg-u-hxy-si@mon:inm  # approved
 seaIce/rlds_tavg-u-hxy-si@mon:ap5  # approved
 seaIce/rlus_tavg-u-hxy-si@mon:ap5  # approved
+seaIce/siconca_tavg-u-hxy-u@day:ap6  # approved
 seaIce/siconca_tavg-u-hxy-u@mon:ap5  # approved
 seaIce/sidconcdyn_tavg-u-hxy-sea@mon:inm  # approved
 seaIce/sidconcth_tavg-u-hxy-sea@mon:inm  # approved
@@ -322,6 +339,7 @@ seaIce/simpconc_tavg-u-hxy-si@mon:inm  # approved
 seaIce/sispeed_tavg-u-hxy-si@mon:inm  # approved
 seaIce/snc_tavg-u-hxy-si@mon:inm  # approved
 seaIce/snw_tavg-u-hxy-si@mon:inm  # approved
+seaIce/ts_tavg-u-hxy-si@day:ap6  # approved
 atmos/rldscs_tavg-u-hxy-u@day:ap6  # approved, priority=medium
 atmos/rsdsdiff_tavg-u-hxy-u@day:ap6  # approved, priority=medium
 atmos/tauupbl_tavg-u-hxy-u@day:ap6  # approved, priority=medium
@@ -329,14 +347,52 @@ atmos/tauvpbl_tavg-u-hxy-u@day:ap6  # approved, priority=medium
 atmos/utendogw_tavg-p19-hxy-air@mon:ap5  # approved, priority=medium
 land/cropFracC3_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
 land/cropFracC4_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/cVeg_tavg-u-hxy-ng@mon:ap5  # approved, priority=medium
+land/cVeg_tavg-u-hxy-shb@mon:ap5  # approved, priority=medium
+land/cVeg_tavg-u-hxy-tree@mon:ap5  # approved, priority=medium
+land/fNgasNonFire_tavg-u-hxy-lnd@mon:ap5  # approved, priority=medium
+land/fracLut_tpt-u-hxy-u@mon:ap5  # approved, priority=medium
+land/gpp_tavg-u-hxy-ng@mon:ap5  # approved, priority=medium
+land/gpp_tavg-u-hxy-shb@mon:ap5  # approved, priority=medium
+land/gpp_tavg-u-hxy-tree@mon:ap5  # approved, priority=medium
+land/gppLut_tavg-u-hxy-multi@mon:ap5  # approved, priority=medium
+land/grassFracC3_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/grassFracC4_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/hflsLut_tavg-u-hxy-multi@mon:ap5  # approved, priority=medium
+land/hfssLut_tavg-u-hxy-multi@mon:ap5  # approved, priority=medium
+land/laiLut_tavg-u-hxy-multi@mon:ap5  # approved, priority=medium
 land/mrro_tavg-u-hxy-lnd@3hr:ap8  # approved, priority=medium
+land/nLeaf_tavg-u-hxy-lnd@mon:ap5  # approved, priority=medium
+land/npp_tavg-u-hxy-ng@mon:ap5  # approved, priority=medium
+land/npp_tavg-u-hxy-shb@mon:ap5  # approved, priority=medium
+land/npp_tavg-u-hxy-tree@mon:ap5  # approved, priority=medium
+land/nppLut_tavg-u-hxy-multi@mon:ap5  # approved, priority=medium
+land/nRoot_tavg-u-hxy-lnd@mon:ap5  # approved, priority=medium
+land/nStem_tavg-u-hxy-lnd@mon:ap5  # approved, priority=medium
 land/pastureFracC3_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
 land/pastureFracC4_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/ra_tavg-u-hxy-ng@mon:ap5  # approved, priority=medium
+land/ra_tavg-u-hxy-shb@mon:ap5  # approved, priority=medium
+land/ra_tavg-u-hxy-tree@mon:ap5  # approved, priority=medium
+land/tasLut_tavg-h2m-hxy-multi@mon:ap5  # approved, priority=medium
+land/treeFracBdlDcd_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/treeFracBdlEvg_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/treeFracNdlDcd_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/treeFracNdlEvg_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+land/tsLut_tavg-u-hxy-multi@mon:ap5  # approved, priority=medium
+land/vegHeight_tavg-u-hxy-ng@mon:ap5  # approved, priority=medium
+land/vegHeight_tavg-u-hxy-shb@mon:ap5  # approved, priority=medium
+land/wetlandFrac_tavg-u-hxy-u@mon:ap5  # approved, priority=medium
+landIce/snc_tavg-u-hxy-lnd@day:ap6  # approved, priority=medium
+ocean/evspsbl_tavg-u-hxy-ifs@mon:onm/grid-T  # approved, priority=medium
 ocean/hfevapds_tavg-u-hxy-ifs@mon:onm/grid-T  # approved, priority=medium
 ocean/hfibthermds_tavg-ol-hxy-sea@mon:onm/grid-T  # approved, priority=medium
 ocean/hfrainds_tavg-u-hxy-ifs@mon:onm/grid-T  # approved, priority=medium
 ocean/hfrunoffds_tavg-ol-hxy-sea@mon:onm/grid-T  # approved, priority=medium
 ocean/t20d_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=medium
+ocnBgchem/epn_tavg-d100m-hxy-sea@mon:onm/diad-T  # approved, priority=medium
+ocnBgchem/epp_tavg-d100m-hxy-sea@mon:onm/diad-T  # approved, priority=medium
+ocnBgchem/fgdms_tavg-u-hxy-sea@mon:ap5  # approved, priority=medium
 ocnBgchem/intppdiat_tavg-u-hxy-sea@mon:onm/diad-T  # approved, priority=medium
 ocnBgchem/limfediat_tavg-u-hxy-sea@mon:onm/diad-T  # approved, priority=medium
 ocnBgchem/limfemisc_tavg-u-hxy-sea@mon:onm/diad-T  # approved, priority=medium
@@ -350,6 +406,8 @@ seaIce/sidmasstranx_tavg-u-hxy-u@mon:inm  # approved, priority=medium
 seaIce/sidmasstrany_tavg-u-hxy-u@mon:inm  # approved, priority=medium
 seaIce/sifb_tavg-u-hxy-si@mon:inm  # approved, priority=medium
 seaIce/sitempbot_tavg-u-hxy-si@mon:inm  # approved, priority=medium
+atmosChem/flashrate_tavg-u-hxy-u@mon:ap5  # approved, priority=low
+ocean/mlotstsq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #atmos/areacella_ti-u-hxy-u@fx:afx  # embargoed
 #atmos/hurs_tavg-h2m-hxy-u@6hr:ap7  # embargoed
@@ -372,8 +430,6 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #ocean/hfgeou_ti-u-hxy-sea@fx:ofx  # embargoed
 #ocean/sftof_ti-u-hxy-u@fx:ofx  # embargoed
 #ocean/sos_tavg-u-hxy-sea@day:ond/grid-T  # embargoed
-#ocean/tauuo_tavg-u-hxy-sea@mon:onm/grid-U  # embargoed
-#ocean/tauvo_tavg-u-hxy-sea@mon:onm/grid-V  # embargoed
 #ocean/tos_tavg-u-hxy-sea@day:ond/grid-T  # embargoed
 #ocean/zos_tavg-u-hxy-sea@day:ond/grid-T  # embargoed
 #ocean/zostoga_tavg-u-hm-sea@mon:onm/grid-T  # embargoed
@@ -469,13 +525,9 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #atmos/clwvi_tavg-u-hxy-u@3hr:ap8  # embargoed
 #atmos/clwvimodis_tavg-u-hxy-u@mon:ap5  # embargoed
 #atmos/co2_tavg-h2m-hxy-u@mon:ap5  # embargoed
-#atmos/co23D_tavg-al-hxy-u@mon:ap5  # embargoed
 #atmos/co2mass_tavg-u-hm-u@mon:ap5  # embargoed
 #atmos/evspsbl_tavg-u-hxy-lnd@day:ap6  # embargoed
-#atmos/fco2fos_tavg-u-hxy-u@mon:ap5  # embargoed
 #atmos/fco2nat_tavg-u-hxy-u@mon:ap5  # embargoed
-#atmos/hfls_tavg-u-hxy-u@3hr:ap8  # embargoed
-#atmos/hfss_tavg-u-hxy-u@3hr:ap8  # embargoed
 #atmos/hurs_tavg-h2m-hxy-u@1hr:ap9  # embargoed
 #atmos/hurs_tmax-h2m-hxy-u@day:ap6  # embargoed
 #atmos/hurs_tmin-h2m-hxy-u@day:ap6  # embargoed
@@ -493,8 +545,6 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #atmos/intvaw_tavg-u-hxy-u@day:ap6  # embargoed
 #atmos/intvaw_tavg-u-hxy-u@mon:ap5  # embargoed
 #atmos/intvaw_tpt-u-hxy-u@6hr:ap7  # embargoed
-#atmos/loadbc_tavg-u-hxy-u@day:ap6  # embargoed
-#atmos/loadoa_tavg-u-hxy-u@day:ap6  # embargoed
 #atmos/mc_tavg-alh-hxy-u@mon:ap5  # embargoed
 #atmos/mcu_tavg-alh-hxy-u@mon:ap5  # embargoed
 #atmos/pr_tpt-u-hxy-u@6hr:ap7  # embargoed
@@ -606,15 +656,7 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #land/evspsblpot_tavg-u-hxy-lnd@day:ap6  # embargoed
 #land/evspsblsoi_tavg-u-hxy-u@day:ap6  # embargoed
 #land/evspsblveg_tavg-u-hxy-u@day:ap6  # embargoed
-#land/fAnthDisturb_tavg-u-hxy-lnd@mon:ap5  # embargoed
-#land/fDeforestToProduct_tavg-u-hxy-lnd@mon:ap5  # embargoed
 #land/fLuc_tavg-u-hxy-lnd@mon:ap5  # embargoed
-#land/fNAnthDisturb_tavg-u-hxy-lnd@mon:ap5  # embargoed
-#land/fNfert_tavg-u-hxy-lnd@mon:ap5  # embargoed
-#land/fNnetmin_tavg-u-hxy-lnd@mon:ap5  # embargoed
-#land/fNProduct_tavg-u-hxy-lnd@mon:ap5  # embargoed
-#land/fProductDecomp_tavg-u-hxy-lnd@mon:ap5  # embargoed
-#land/fVegSoil_tavg-u-hxy-lnd@mon:ap5  # embargoed
 #land/landCoverFrac_tavg-u-hxy-u@mon:ap5  # embargoed
 #land/mrrob_tavg-u-hxy-lnd@day:ap6  # embargoed
 #land/mrros_tavg-u-hxy-lnd@day:ap6  # embargoed
@@ -702,7 +744,6 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #seaIce/rsus_tavg-u-hxy-si@day:ap6  # embargoed
 #seaIce/rsus_tavg-u-hxy-si@mon:ap5  # embargoed
 #seaIce/siage_tavg-u-hxy-si@day:ind  # embargoed
-#seaIce/siconca_tavg-u-hxy-u@day:ap6  # embargoed
 #seaIce/sidmassdyn_tavg-u-hxy-si@mon:inm  # embargoed
 #seaIce/sidmassgrowthsi_tavg-u-hxy-si@mon:inm  # embargoed
 #seaIce/sidmassgrowthwat_tavg-u-hxy-si@mon:inm  # embargoed
@@ -733,7 +774,6 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #seaIce/siv_tavg-u-hxy-si@day:ind  # embargoed
 #seaIce/snd_tavg-u-hxy-sn@day:ind  # embargoed
 #seaIce/snm_tavg-u-hxy-si@mon:inm  # embargoed
-#seaIce/ts_tavg-u-hxy-si@day:ap6  # embargoed
 #atmos/bldep_tavg-u-hxy-u@1hr:ap9  # embargoed, priority=medium
 #atmos/clic_tpt-al-hxy-u@3hr:ap8  # embargoed, priority=medium
 #atmos/clis_tpt-al-hxy-u@3hr:ap8  # embargoed, priority=medium
@@ -788,65 +828,27 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #atmos/zg_tpt-700hPa-hxy-u@6hr:ap7  # embargoed, priority=medium
 #atmos/zg_tpt-925hPa-hxy-u@6hr:ap7  # embargoed, priority=medium
 #atmosChem/flashrate_tavg-u-hxy-u@day:ap6  # embargoed, priority=medium
-#land/cVeg_tavg-u-hxy-ng@mon:ap5  # embargoed, priority=medium
-#land/cVeg_tavg-u-hxy-shb@mon:ap5  # embargoed, priority=medium
-#land/cVeg_tavg-u-hxy-tree@mon:ap5  # embargoed, priority=medium
 #land/evspsblsoi_tavg-u-hxy-u@3hr:ap8  # embargoed, priority=medium
 #land/evspsblveg_tavg-u-hxy-u@3hr:ap8  # embargoed, priority=medium
-#land/fNgasNonFire_tavg-u-hxy-lnd@mon:ap5  # embargoed, priority=medium
-#land/fracLut_tpt-u-hxy-u@mon:ap5  # embargoed, priority=medium
-#land/gpp_tavg-u-hxy-ng@mon:ap5  # embargoed, priority=medium
-#land/gpp_tavg-u-hxy-shb@mon:ap5  # embargoed, priority=medium
-#land/gpp_tavg-u-hxy-tree@mon:ap5  # embargoed, priority=medium
-#land/gppLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
-#land/grassFracC3_tavg-u-hxy-u@mon:ap5  # embargoed, priority=medium
-#land/grassFracC4_tavg-u-hxy-u@mon:ap5  # embargoed, priority=medium
 #land/hfdsl_tavg-u-hxy-lnd@3hr:ap8  # embargoed, priority=medium
-#land/hflsLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
-#land/hfssLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
-#land/laiLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
 #land/mrros_tavg-u-hxy-lnd@3hr:ap8  # embargoed, priority=medium
 #land/mrsol_tavg-d100cm-hxy-lnd@3hr:ap8  # embargoed, priority=medium
-#land/nLeaf_tavg-u-hxy-lnd@mon:ap5  # embargoed, priority=medium
-#land/npp_tavg-u-hxy-ng@mon:ap5  # embargoed, priority=medium
-#land/npp_tavg-u-hxy-shb@mon:ap5  # embargoed, priority=medium
-#land/npp_tavg-u-hxy-tree@mon:ap5  # embargoed, priority=medium
-#land/nppLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
-#land/nRoot_tavg-u-hxy-lnd@mon:ap5  # embargoed, priority=medium
-#land/nStem_tavg-u-hxy-lnd@mon:ap5  # embargoed, priority=medium
-#land/ra_tavg-u-hxy-ng@mon:ap5  # embargoed, priority=medium
-#land/ra_tavg-u-hxy-shb@mon:ap5  # embargoed, priority=medium
-#land/ra_tavg-u-hxy-tree@mon:ap5  # embargoed, priority=medium
 #land/raLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
 #land/sweLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
-#land/tasLut_tavg-h2m-hxy-multi@mon:ap5  # embargoed, priority=medium
 #land/tran_tavg-u-hxy-u@3hr:ap8  # embargoed, priority=medium
-#land/treeFracBdlDcd_tavg-u-hxy-u@mon:ap5  # embargoed, priority=medium
-#land/treeFracBdlEvg_tavg-u-hxy-u@mon:ap5  # embargoed, priority=medium
-#land/treeFracNdlDcd_tavg-u-hxy-u@mon:ap5  # embargoed, priority=medium
-#land/treeFracNdlEvg_tavg-u-hxy-u@mon:ap5  # embargoed, priority=medium
-#land/tsLut_tavg-u-hxy-multi@mon:ap5  # embargoed, priority=medium
-#land/vegHeight_tavg-u-hxy-ng@mon:ap5  # embargoed, priority=medium
-#land/vegHeight_tavg-u-hxy-shb@mon:ap5  # embargoed, priority=medium
-#land/wetlandFrac_tavg-u-hxy-u@mon:ap5  # embargoed, priority=medium
 #landIce/hfdsn_tavg-u-hxy-lnd@day:ap6  # embargoed, priority=medium
 #landIce/sbl_tavg-u-hxy-u@day:ap6  # embargoed, priority=medium
-#landIce/snc_tavg-u-hxy-lnd@day:ap6  # embargoed, priority=medium
 #landIce/snd_tavg-u-hxy-lnd@day:ap6  # embargoed, priority=medium
 #landIce/snm_tavg-u-hxy-lnd@day:ap6  # embargoed, priority=medium
-#ocean/evspsbl_tavg-u-hxy-ifs@mon:onm/grid-T  # embargoed, priority=medium
 #ocean/siflfwbot_tavg-u-hxy-sea@mon:onm/grid-T  # embargoed, priority=medium
 #ocean/so_tavg-ol-hxy-sea@day:ond/grid-T  # embargoed, priority=medium
 #ocnBgchem/chl_tavg-op20bar-hxy-sea@day:ond/ptrc-T  # embargoed, priority=medium
-#ocnBgchem/epn_tavg-d100m-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
-#ocnBgchem/epp_tavg-d100m-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/expcalcob_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/expcob_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/expfeob_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/expnob_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/exppob_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/expsiob_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
-#ocnBgchem/fgdms_tavg-u-hxy-sea@mon:ap5  # embargoed, priority=medium
 #ocnBgchem/frfe_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/intppmisc_tavg-u-hxy-sea@mon:onm/diad-T  # embargoed, priority=medium
 #ocnBgchem/o2_tavg-op20bar-hxy-sea@day:ond/ptrc-T  # embargoed, priority=medium
@@ -874,7 +876,6 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #aerosol/sfpm10_tavg-h2m-hxy-u@1hr:ap9  # embargoed, priority=low
 #atmos/hurs_tmin-h2m-hxy-crp@day:ap6  # embargoed, priority=low
 #atmosChem/drynoy_tavg-u-hxy-u@day:ap6  # embargoed, priority=low
-#atmosChem/flashrate_tavg-u-hxy-u@mon:ap5  # embargoed, priority=low
 #atmosChem/wetnoy_tavg-u-hxy-u@day:ap6  # embargoed, priority=low
 #land/c3PftFrac_tavg-u-hxy-u@mon:ap5  # embargoed, priority=low
 #land/c4PftFrac_tavg-u-hxy-u@mon:ap5  # embargoed, priority=low
@@ -884,7 +885,6 @@ ocean/tossq_tavg-u-hxy-sea@mon:onm/grid-T  # approved, priority=low
 #ocean/dyto_ti-u-hxy-u@fx:ofx  # embargoed, priority=low
 #ocean/dyuo_ti-u-hxy-u@fx:ofx  # embargoed, priority=low
 #ocean/dyvo_ti-u-hxy-u@fx:ofx  # embargoed, priority=low
-#ocean/mlotstsq_tavg-u-hxy-sea@mon:onm/grid-T  # embargoed, priority=low
 #ocean/msftypa_tavg-ol-ht-sea@mon:onm/diaptr  # embargoed, priority=low
 #ocean/rsdo_tavg-ol-hxy-sea@day:ond/grid-T  # embargoed, priority=low
 #ocean/sossq_tavg-u-hxy-sea@mon:onm/grid-T  # embargoed, priority=low
