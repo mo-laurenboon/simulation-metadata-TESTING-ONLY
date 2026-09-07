@@ -372,7 +372,7 @@ def check_fixed_fields(meta_dict: dict[str, str], errors: dict[str, str]) -> dic
     return errors
 
 
-def check_cvs(meta_dict: dict[str, str], errors: dict[str, str]) -> dict[str, str]:
+def check_cvs(meta_dict: dict[str, str], errors: dict[str, str], warnings: dict[str, str]) -> dict[str, str]:
     """Checks that inputs are present within the CV and are the expected value for a given experiment. Each experiment
     is expected to have one of a specific list of parent experiments, mips etc. This must be checked and consistent to
     avoid errors in CDDS. There may be cases where what is expected by the CVs does not match what was used in real
@@ -385,6 +385,8 @@ def check_cvs(meta_dict: dict[str, str], errors: dict[str, str]) -> dict[str, st
         The dictionary containing the submitted metadata information.
     errors: dict[str, str]
         The dictionary containing any triggered error messages.
+    warnings: dict[str, str]
+            The dictionary containing any triggered warning messages.
 
     Returns
     -------
@@ -424,13 +426,20 @@ def check_cvs(meta_dict: dict[str, str], errors: dict[str, str]) -> dict[str, st
             cv_errors.append(f"parent mip '{parent_mip}' does not match one of the expected values "
                              f"'{parent_mip_in_cv}' given in the cvs")
 
+    cv_end_year = experiment_cv_info["end_year"]
+    if cv_end_year:
+        end_year = meta_dict.get("end_date").split("-")[0]
+        if end_year != cv_end_year:
+            warnings["end_date"] = ("end date does not match the value in the CVs. Expected an end year of "
+                                    f"{cv_end_year}, got {end_year}")
+
     if cv_errors:
         errors["cv_error"] = cv_errors
 
-    return errors
+    return errors, warnings
 
 
-def validate_meta_content(meta_dict: dict[str, str]) -> dict[str, str]:
+def validate_meta_content(meta_dict: dict[str, str]) -> tuple[dict[str, str], dict[str, str]]:
     """Wrapper function to handle all validation tasks.
 
     Parameters
@@ -440,32 +449,35 @@ def validate_meta_content(meta_dict: dict[str, str]) -> dict[str, str]:
 
     Returns
     -------
-    dict[str, str]
-        A dictionary containing any errors caused by user input from the form.
+    tuple[dict[str, str], dict[str, str])
+        A dictionary containing any errors and a dictionary containing any warnings caused by user input from the form.
     """
     errors = set_calendar(meta_dict.get("calendar"))
+    warnings = {}
     check_for_missing_inputs(meta_dict, errors)
     check_parent_fields(meta_dict, errors)
     check_datetime_fields(meta_dict, errors)
     check_start_end_logic(meta_dict, errors)
     check_fixed_fields(meta_dict, errors)
-    check_cvs(meta_dict, errors)
+    check_cvs(meta_dict, errors, warnings)
     check_mass_data_class_attributes(meta_dict, errors)
     check_model_workflow_id(meta_dict, errors)
     check_variant_labels(meta_dict, errors)
     check_atmos_timestep(meta_dict, errors)
 
-    return errors
+    return errors, warnings
 
 
-def format_warning_message(errors: dict[str, str]) -> str:
+def format_message(msg: dict[str, str], msg_type) -> str:
     """Formats the a human readable warning message to be returned to the user in the comments of the issue but the
     GitHub Actions bot.
 
     Parameters
     ----------
-    errors : dict[str, str]
-        A dictionary containing any errors caused by user input from the form.
+    msg : dict[str, str]
+        A dictionary containing any messages to be returned to the user.
+    msg_type: str
+        The type of message. Error or warning.
 
     Returns
     -------
@@ -473,17 +485,17 @@ def format_warning_message(errors: dict[str, str]) -> str:
         A human readable message detailing all warnings.
     """
     warnings = []
-    for key, value in errors.items():
+    for key, value in msg.items():
         clean_key = key.strip().capitalize().replace("_", " ")
         if isinstance(value, list):
             for item in value:
                 list_value = item
                 clean_value = list_value.strip().replace("_", " ")
-                warning = clean_key + " warning" + ": " + clean_value + "."
+                warning = clean_key + " " + msg_type + ": " + clean_value + "."
                 warnings.append(warning)
         else:
             clean_value = value.strip().replace("_", " ")
-            warning = clean_key + " warning" + ": " + clean_value + "."
+            warning = clean_key + " " + msg_type + ": " + clean_value + "."
             warnings.append(warning)
 
     warning_str = "\n".join(warnings)
@@ -587,6 +599,15 @@ def main() -> None:
 
     # Create output file.
     filename = create_filename(meta_dict)
+    delimiter = "EOF"
+
+    if warnings:
+        warnings = format_message(warnings, "warning")
+        print(warnings)
+        with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
+            gh.write(f"warnings<<{delimiter}\n")
+            gh.write(f"{warnings}\n")
+            gh.write(f"{delimiter}\n")
 
     if not errors:
         print("Validating issue form inputs...  SUCCESSFUL")  # Printed to the action logs for debugging
@@ -603,15 +624,13 @@ def main() -> None:
 
     else:
         print("Validating issue form inputs...  FAILED")  # Printed to the action logs for debugging purposes
-        warnings = format_warning_message(errors)
-        print(warnings)  # Printed to the action logs for debugging purposes
-
+        errors = format_message(errors, "error")
+        print(errors)  # Printed to the action logs for debugging purposes
         # Note any warnings to be provided to the user in the issue comments by the GitHub Actions bot. This must be
         # written to the the github env in a way that can be interpreted rather than read line by line.
-        delimiter = "EOF"
         with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
-            gh.write(f"warnings<<{delimiter}\n")
-            gh.write(f"{warnings}\n")
+            gh.write(f"errors<<{delimiter}\n")
+            gh.write(f"{errors}\n")
             gh.write(f"{delimiter}\n")
 
         sys.exit(1)
