@@ -51,7 +51,9 @@ jobs:
           BODY: >
             Your metadata file contains incorrect or improperly formatted fields. 
             Please re submit your form and amend the following issues:
-            ${{ steps.create-file.outputs.warnings }}.
+            ${{ steps.create-file.outputs.errors }}.
+
+            ${{ steps.create-file.outputs.warnings }}
 
             If you believe this to be an error, please contact a member of the CDDS team.
 
@@ -117,6 +119,8 @@ jobs:
           REPO: ${{ github.repository }}
           ISSUE: ${{ github.event.issue.number }}
           BODY: >
+            ${{ steps.create-file.outputs.warnings }}
+            
             Your metadata file has been successfully added to the repository as: 
             ${{ steps.create-file.outputs.filename }}
 
