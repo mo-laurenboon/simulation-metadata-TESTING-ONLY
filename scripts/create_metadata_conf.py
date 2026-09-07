@@ -594,7 +594,7 @@ def main() -> None:
     print("Extracting issue body...  SUCCESSFUL")
 
     # Validate and organise dictionary content.
-    errors = validate_meta_content(meta_dict)
+    errors, warnings = validate_meta_content(meta_dict)
     organised_metadata = sort_to_categories(meta_dict)
 
     # Create output file.
