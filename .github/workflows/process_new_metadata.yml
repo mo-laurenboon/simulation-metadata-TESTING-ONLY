@@ -120,6 +120,7 @@ jobs:
           ISSUE: ${{ github.event.issue.number }}
           BODY: >
             ${{ steps.create-file.outputs.warnings }}
+
             
             Your metadata file has been successfully added to the repository as: 
             ${{ steps.create-file.outputs.filename }}
