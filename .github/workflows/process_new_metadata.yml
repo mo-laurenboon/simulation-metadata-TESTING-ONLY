@@ -23,7 +23,7 @@ jobs:
         run: |
           gh issue comment "$NUMBER" --body "$BODY"
           echo "NOTE: The issue is currently closed. A new issue must be opened in order to process any changes."
-          exit 0
+          exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUMBER: ${{ github.event.issue.number }}
