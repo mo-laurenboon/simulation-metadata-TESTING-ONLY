@@ -17,6 +17,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: block closed issues
+        if: github.event.issue.state == 'closed'
+        run: |
+          gh issue comment "$NUMBER" --body "$BODY"
+          echo "NOTE: The issue is currently closed. A new issue must be opened in order to process any changes."
+          exit 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: >
+            You are attempting to edit a closed issue. A new issue must be opened in order to process any changes.
+            Your edits have **not** been processed.
         
       - name: setup python
         uses: actions/setup-python@v4
