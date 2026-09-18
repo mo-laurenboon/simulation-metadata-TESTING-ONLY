@@ -91,7 +91,7 @@ jobs:
                     User: ${{ github.actor }} 
                     Issue title: ${{ github.event.issue.title }}
                     Issue ID: ${{ github.event.issue.number }}
-                    Filename: ${{ steps.create-file.outputs.filename }}"  \
+                    Filename: ${{ steps.modify-file.outputs.filename }}"  \
             --add-assignee mo-laurenboon \
             --base main \
             --head $(git rev-parse --abbrev-ref HEAD)
@@ -101,7 +101,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUMBER: ${{ github.event.issue.number }}
           BODY: >
-            ${{ steps.create-file.outputs.warnings }}.
+            ${{ steps.modify-file.outputs.warnings }}.
 
             A pull request has been opened to review your changes.
             
