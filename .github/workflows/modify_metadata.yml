@@ -92,7 +92,7 @@ jobs:
                     Issue title: ${{ github.event.issue.title }}
                     Issue ID: ${{ github.event.issue.number }}
                     Filename: ${{ steps.modify-file.outputs.filename }}"  \
-            --add-assignee mo-laurenboon \
+            --assignee mo-laurenboon \
             --base main \
             --head $(git rev-parse --abbrev-ref HEAD)
 
