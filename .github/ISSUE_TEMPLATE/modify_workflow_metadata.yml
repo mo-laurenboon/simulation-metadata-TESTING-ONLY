@@ -47,6 +47,7 @@ body:
       label: Model ID
       description: Short name identifying the model (also known as source ID).
       options:
+        - "_No response_"
         - "UKCM2-0-LL"
         - "UKCM2a-0-HH"
         - "UKESM1-3-LL"
@@ -81,6 +82,7 @@ body:
       description: |
         Branching Method: "standard" (has a parent simulation) or "no parent". For standard branch types, parent information is required: see below.
       options:
+        - "_No response_"
         - "standard"
         - "no parent"
       default: 0
@@ -91,6 +93,7 @@ body:
       label: Calendar Type
       description: Type of calendar used. If using a Gregorian calendar, please select "proleptic_gregorian".
       options:
+        - "_No response_"
         - "proleptic_gregorian"
         - "360_day"
       default: 0
@@ -101,6 +104,7 @@ body:
       label: Institution ID
       description: Institution identifier. Please select UKNCSP unless discussed with the CMIP project team.
       options:
+        - "_No response_"
         - "UKNCSP"
         - "MOHC"
         - "NERC"
@@ -112,6 +116,7 @@ body:
       label: MIP Era
       description: MIP era.
       options:
+        - "_No response_"
         - "CMIP7"
       default: 0
 
@@ -128,6 +133,7 @@ body:
       label: Mass Data Class
       description: Root of the location of input dataset on MASS. If data exists only on JASMIN, please select the default value "crum". For data classes using the "ens" root, a mass ensemble ID is required. Please see below.
       options:
+        - "_No response_"
         - "crum"
         - "ens"
       default: 0
