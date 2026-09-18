@@ -1,0 +1,234 @@
+# (C) British Crown Copyright 2026, Met Office.
+# Please see LICENSE.md for license details.
+name: "Modify Workflow Metadata"
+description: Modify metadata for a CDDS workflow
+title: "Modify Workflow Metadata: <Type model_workflow_id here>"
+labels: ['modify_metadata']
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        # Modify metadata for a CDDS workflow
+        ## Please only fill out fields that you wish to modify
+
+  - type: markdown
+    attributes:
+      value: |
+        ### NOTE: If your workflow uses NEMO data over the years 1850-1900, the data may require an additional fix prior to processing.
+        Please contact the CDDS team to discuss this and we will supply you with a script to correct the model data.
+
+  - type: input 
+    id: model_workflow_id
+    attributes:
+      label: Model Workflow ID
+      description: Model workflow identifier.
+      placeholder: "e.g. u-aw310"
+    validations:
+      required: true
+
+  - type: input 
+    id: mip
+    attributes:
+      label: Activity ID (MIP)
+      description: Activity identifier (MIP).
+      placeholder: "e.g. CMIP"
+
+  - type: input 
+    id: experiment_id
+    attributes:
+      label: Experiment ID
+      description: Experiment identifier.
+      placeholder: "e.g. piControl"
+
+  - type: dropdown 
+    id: model_id
+    attributes:
+      label: Model ID
+      description: Short name identifying the model (also known as source ID).
+      options:
+        - "UKCM2-0-LL"
+        - "UKCM2a-0-HH"
+        - "UKESM1-3-LL"
+        - "HadGEM3-GC31-MM"
+      default: 0
+
+  - type: input 
+    id: variant_label
+    attributes:
+      label: Variant label
+      description: Variant label.
+      placeholder: "e.g. r1i1p1f2"
+
+  - type: input 
+    id: start_date
+    attributes:
+      label: Start Date
+      description: Start date for processing in the format yyyy-mm-ddTHH:MM:SSZ.
+      placeholder: "e.g. 2000-01-01T00:00:00Z"
+
+  - type: input 
+    id: end_date
+    attributes:
+      label: End Date
+      description: End date for processing in the format yyyy-mm-ddTHH:MM:SSZ.
+      placeholder: "e.g. 2001-01-01T00:00:00Z"
+
+  - type: dropdown
+    id: branch_method
+    attributes:
+      label: Branch Method
+      description: |
+        Branching Method: "standard" (has a parent simulation) or "no parent". For standard branch types, parent information is required: see below.
+      options:
+        - "standard"
+        - "no parent"
+      default: 0
+
+  - type: dropdown
+    id: calendar
+    attributes:
+      label: Calendar Type
+      description: Type of calendar used. If using a Gregorian calendar, please select "proleptic_gregorian".
+      options:
+        - "proleptic_gregorian"
+        - "360_day"
+      default: 0
+
+  - type: dropdown
+    id: institution_id
+    attributes:
+      label: Institution ID
+      description: Institution identifier. Please select UKNCSP unless discussed with the CMIP project team.
+      options:
+        - "UKNCSP"
+        - "MOHC"
+        - "NERC"
+      default: 0
+
+  - type: dropdown
+    id: mip_era
+    attributes:
+      label: MIP Era
+      description: MIP era.
+      options:
+        - "CMIP7"
+      default: 0
+
+  - type: input 
+    id: atmos_timestep
+    attributes:
+      label: Atmospheric Timestep
+      description: Atmospheric timestep in seconds. This is usually 1200 for n=96, 900 for n=216 and 600 for n=512.
+      placeholder: "e.g. 1200"
+
+  - type: dropdown
+    id: mass_data_class
+    attributes:
+      label: Mass Data Class
+      description: Root of the location of input dataset on MASS. If data exists only on JASMIN, please select the default value "crum". For data classes using the "ens" root, a mass ensemble ID is required. Please see below.
+      options:
+        - "crum"
+        - "ens"
+      default: 0
+
+  - type: markdown
+    attributes:
+      value: |
+        
+        -----------------------------------------------------------------------------------------
+        
+        The fields below are required only if the branch method is being updated to "standard", for "no parent" branches, please disregard this section...
+
+        -----------------------------------------------------------------------------------------
+
+  - type: input #CONDITIONAL ON BRANCH METHOD
+    id: branch_date_in_child
+    attributes:
+      label: Child Branch Date
+      description: |
+        The date in this simulation where initial conditions from parent were applied. 
+        Please use the format yyyy-mm-ddTHH:MM:SSZ.
+      placeholder: "e.g. 1960-01-01T00:00:00Z"
+
+  - type: input #CONDITIONAL ON BRANCH METHOD
+    id: branch_date_in_parent
+    attributes:
+      label: Parent Branch Date
+      description: |
+        The date in the parent simulation from which initial conditions were taken. 
+        Please use the format yyyy-mm-ddTHH:MM:SSZ.
+      placeholder: "e.g. 1960-01-01T00:00:00Z"
+
+  - type: input #CONDITIONAL ON BRANCH METHOD
+    id: parent_experiment_id
+    attributes:
+      label: Parent Experiment ID
+      description: Parent experiment identifier.
+      placeholder: "e.g. piControl-spinup"
+
+  - type: input #CONDITIONAL ON BRANCH METHOD
+    id: parent_mip
+    attributes:
+      label: Parent Activity ID (MIP)
+      description: Parent activity identifier.
+      placeholder: "e.g. CMIP"
+
+  - type: dropdown #CONDITIONAL ON BRANCH METHOD
+    id: parent_mip_era
+    attributes:
+      label: Parent MIP Era
+      description: Parent MIP era.
+      options:
+        - "_No response_"
+        - "CMIP7"
+      default: 0
+    
+  - type: input #CONDITIONAL ON BRANCH METHOD
+    id: parent_model_id
+    attributes:
+      label: Parent Model ID
+      description: Parent model identifier (also known as parent source ID).
+      placeholder: "e.g. UKESM1-0-LL"
+
+  - type: input #CONDITIONAL ON BRANCH METHOD
+    id: parent_time_units
+    attributes:
+      label: Parent Time Units
+      description: Time units used in the parent model.
+      placeholder: "e.g. days since 1850-01-01"
+
+  - type: input #CONDITIONAL ON BRANCH METHOD
+    id: parent_variant_label
+    attributes:
+      label: Parent Variant Label
+      description: Label of the specific variant of the parent experiment.
+      placeholder: "e.g. r1i1p1f2"
+
+  - type: markdown
+    attributes:
+      value: |
+        
+        -----------------------------------------------------------------------------------------
+
+  - type: markdown
+    attributes:
+      value: |
+        
+        -----------------------------------------------------------------------------------------
+
+        The field below is required only if the selected mass data class is being updated to "ens", for "crum" data classes, please disregard this section...
+
+        -----------------------------------------------------------------------------------------
+
+  - type: input # CONDITIONAL ON MASS DATA CLASS
+    id: mass_ensemble_member
+    attributes:
+      label: Mass Ensemble Member ID
+      description: Mass ensemble member identifier.
+
+  - type: markdown
+    attributes:
+      value: |
+        
+        -----------------------------------------------------------------------------------------
