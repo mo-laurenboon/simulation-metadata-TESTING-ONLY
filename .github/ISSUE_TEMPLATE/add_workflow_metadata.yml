@@ -1,33 +1,21 @@
 # (C) British Crown Copyright 2026, Met Office.
 # Please see LICENSE.md for license details.
-name: "Add/Modify Workflow Metadata"
-description: Add or modify metadata for a CDDS workflow
-title: "Add/Modify Workflow Metadata: <Type model_workflow_id here>"
+name: "Add Workflow Metadata"
+description: Add metadata for a CDDS workflow
+title: "Add Workflow Metadata: <Type model_workflow_id here>"
 labels: ['metadata_entry']
 body:
 
   - type: markdown
     attributes:
       value: |
-        # Add or modify metadata for a CDDS workflow
+        # Add metadata for a CDDS workflow
 
   - type: markdown
     attributes:
       value: |
         ### NOTE: If your workflow uses NEMO data over the years 1850-1900, the data may require an additional fix prior to processing.
         Please contact the CDDS team to discuss this and we will supply you with a script to correct the model data.
-
-  - type: dropdown
-    id: issue_kind
-    attributes:
-      label: Issue Type
-      description: Create new or modify existing metadata.
-      options:
-        - "New"
-        - "Modify"
-      default: 0
-    validations:
-      required: true
 
   - type: input 
     id: model_workflow_id
