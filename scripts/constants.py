@@ -1,6 +1,7 @@
 # (C) British Crown Copyright 2026, Met Office.
 # Please see LICENSE.md for license details.
 import requests
+import re
 
 from pathlib import Path
 
@@ -141,7 +142,6 @@ REGEX_FORMAT = {
 }
 
 META_FIELDS = {
-        "issue_type": "issue_type",
         "base_date": "base_date",
         "branch_method": "branch_method",
         "child_branch_date": "branch_date_in_child",
@@ -167,6 +167,7 @@ META_FIELDS = {
         "atmospheric_timestep": "atmos_timestep"
     }
 
+WORKFLOW_METADATA_DIR = Path("workflow_metadata")
 REF_INFO_DIR = Path("reference_information")
 MAPPINGS_FILE_LOCATION = REF_INFO_DIR / "mappings.json"
 KNOWN_ISSUES_DICT_FILE_LOCATION = REF_INFO_DIR / "known_issues.json"
@@ -174,4 +175,10 @@ CMOR_CV_JSON = requests.get("https://raw.githubusercontent.com/WCRP-CMIP/cmip7-c
 
 DR_VERSION = "1.2.2.5"
 DR_FILE_LOCATION = REF_INFO_DIR / f"dr-{DR_VERSION}_all.json"
+
+REGEX_DICT = {
+    "workflow_pattern": re.compile(REGEX_FORMAT["model_workflow_id"]),
+    "variant_pattern": re.compile(REGEX_FORMAT["variant_label"]),
+}
+
 MIP_TABLE_DIR = f"$CDDS_ETC/mip_tables/CMIP7/DR-{DR_VERSION}-v1.0.2"
