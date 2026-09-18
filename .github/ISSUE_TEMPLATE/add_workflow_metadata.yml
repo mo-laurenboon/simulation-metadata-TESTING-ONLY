@@ -1,16 +1,15 @@
 # (C) British Crown Copyright 2026, Met Office.
 # Please see LICENSE.md for license details.
-name: "Modify Workflow Metadata"
-description: Modify metadata for a CDDS workflow
-title: "Modify Workflow Metadata: <Type model_workflow_id here>"
-labels: ['modify_metadata']
+name: "Add Workflow Metadata"
+description: Add metadata for a CDDS workflow
+title: "Add Workflow Metadata: <Type model_workflow_id here>"
+labels: ['metadata_entry']
 body:
 
   - type: markdown
     attributes:
       value: |
-        # Modify metadata for a CDDS workflow
-        ## Please only fill out fields that you wish to modify
+        # Add metadata for a CDDS workflow
 
   - type: markdown
     attributes:
@@ -33,6 +32,8 @@ body:
       label: Activity ID (MIP)
       description: Activity identifier (MIP).
       placeholder: "e.g. CMIP"
+    validations:
+      required: true
 
   - type: input 
     id: experiment_id
@@ -40,6 +41,8 @@ body:
       label: Experiment ID
       description: Experiment identifier.
       placeholder: "e.g. piControl"
+    validations:
+      required: true
 
   - type: dropdown 
     id: model_id
@@ -52,6 +55,8 @@ body:
         - "UKESM1-3-LL"
         - "HadGEM3-GC31-MM"
       default: 0
+    validations:
+      required: true
 
   - type: input 
     id: variant_label
@@ -59,6 +64,8 @@ body:
       label: Variant label
       description: Variant label.
       placeholder: "e.g. r1i1p1f2"
+    validations:
+      required: true
 
   - type: input 
     id: start_date
@@ -66,6 +73,8 @@ body:
       label: Start Date
       description: Start date for processing in the format yyyy-mm-ddTHH:MM:SSZ.
       placeholder: "e.g. 2000-01-01T00:00:00Z"
+    validations:
+      required: true
 
   - type: input 
     id: end_date
@@ -73,6 +82,8 @@ body:
       label: End Date
       description: End date for processing in the format yyyy-mm-ddTHH:MM:SSZ.
       placeholder: "e.g. 2001-01-01T00:00:00Z"
+    validations:
+      required: true
 
   - type: dropdown
     id: branch_method
@@ -84,6 +95,8 @@ body:
         - "standard"
         - "no parent"
       default: 0
+    validations:
+      required: true
 
   - type: dropdown
     id: calendar
@@ -94,6 +107,8 @@ body:
         - "proleptic_gregorian"
         - "360_day"
       default: 0
+    validations:
+      required: true
 
   - type: dropdown
     id: institution_id
@@ -105,6 +120,8 @@ body:
         - "MOHC"
         - "NERC"
       default: 0
+    validations:
+      required: true
 
   - type: dropdown
     id: mip_era
@@ -114,6 +131,8 @@ body:
       options:
         - "CMIP7"
       default: 0
+    validations:
+      required: true
 
   - type: input 
     id: atmos_timestep
@@ -121,6 +140,8 @@ body:
       label: Atmospheric Timestep
       description: Atmospheric timestep in seconds. This is usually 1200 for n=96, 900 for n=216 and 600 for n=512.
       placeholder: "e.g. 1200"
+    validations:
+      required: true
 
   - type: dropdown
     id: mass_data_class
@@ -131,6 +152,18 @@ body:
         - "crum"
         - "ens"
       default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Any additional notes about the workflow you are registering.
+      placeholder: |
+        Add any additional notes here. This could be information about the workflow itself or which platform hosts the input data (e.g. disk, MASS or moomin).
+        
+        NOTE: This is a public repository. Do not include confidential, sensitive information, or explicit data paths. Please perform the expected due diligence to confirm that any notes are suitable for public release.
 
   - type: markdown
     attributes:
@@ -138,7 +171,7 @@ body:
         
         -----------------------------------------------------------------------------------------
         
-        The fields below are required only if the branch method is being updated to "standard", for "no parent" branches, please disregard this section...
+        The fields below are required only if the selected branch method is "standard", for "no parent" branches, please disregard this section...
 
         -----------------------------------------------------------------------------------------
 
@@ -217,7 +250,7 @@ body:
         
         -----------------------------------------------------------------------------------------
 
-        The field below is required only if the selected mass data class is being updated to "ens", for "crum" data classes, please disregard this section...
+        The field below is required only if the selected mass data class is "ens", for "crum" data classes, please disregard this section...
 
         -----------------------------------------------------------------------------------------
 
