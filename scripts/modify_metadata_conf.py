@@ -41,6 +41,8 @@ def read_issue_body() -> dict:
 def read_metadata_file(filename: str):
     """Reads in the existing workflow metadata file to be editted."""
     config = configparser.ConfigParser()
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f"{filename} does not exist.")
     config.read(filename)
 
     return config
@@ -112,7 +114,7 @@ def main():
             gh.write(f"{warnings}\n")
             gh.write(f"{delimiter}\n")
 
-    if not errors:
+    if not validation_result.errors:
         print("Validating inputs...  SUCCESSFUL")  # Printed to the action logs for debugging
         save_modified_metadata(filename, metadata_config)
 
