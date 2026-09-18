@@ -118,10 +118,10 @@ def sort_to_categories(meta_dict: dict[str, str]) -> dict:
             misc_dict[key] = value
 
     # Re map organised keys as nested dictionaries.
-    organised_metadata["[metadata]"] = metadata_dict
-    organised_metadata["[data]"] = data_dict
-    organised_metadata["[misc]"] = misc_dict
-    organised_metadata["[ADDITIONAL INFO]"] = {
+    organised_metadata["metadata"] = metadata_dict
+    organised_metadata["data"] = data_dict
+    organised_metadata["misc"] = misc_dict
+    organised_metadata["ADDITIONAL INFO"] = {
         "notes": meta_dict.get("additional_notes"),
         "updates": ""
     }
@@ -141,7 +141,7 @@ def format_cfg_file(output_file: Path, organised_metadata: dict[str, str]) -> No
     """
     with open(output_file, "w") as f:
         for key, value in organised_metadata.items():
-            f.write(f"{key}\n")
+            f.write(f"[{key}]\n")
             if isinstance(value, dict):
                 for k, v in value.items():
                     f.write(f"{k} = {v}\n")
