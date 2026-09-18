@@ -105,8 +105,8 @@ def main():
     validation_result = validator.validate_all()
 
     # Add any warnings to the GitHub env. These are returned to the user on both validation success and failure.
+    delimiter = "EOF"
     if validation_result.warnings:
-        delimiter = "EOF"
         warnings = format_message(validation_result.warnings, "warning")
         print(warnings)
         with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
