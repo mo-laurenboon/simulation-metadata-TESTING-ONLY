@@ -71,7 +71,8 @@ jobs:
 
             Thank you for your contribution.
 
-      - name: create PR 
+      - name: create PR
+        if: steps.modify-file.outcome != 'failure'
         run: | 
           branch="update-metadata-#${{ github.event.issue.number }}"
           git checkout -b "$branch"
