@@ -1,0 +1,108 @@
+# (C) British Crown Copyright 2026, Met Office.
+# Please see LICENSE.md for license details.
+
+name: "Modify metadata entry"
+on: 
+  issues:
+    types: [opened, edited]
+
+jobs:
+  process-metadata:
+    if: contains(github.event.issue.labels.*.name, 'modify_metadata')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: block closed issues
+        if: github.event.issue.state == 'closed'
+        run: |
+          gh issue comment "$NUMBER" --body "$BODY"
+          echo "NOTE: The issue is currently closed. A new issue must be opened in order to process any changes."
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: >
+            You are attempting to edit a closed issue. A new issue must be opened in order to process any changes.
+            Your edits have **not** been processed.
+        
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: install dependencies
+        run: |
+          pip install "metomi-isodatetime==1!3.0.0"
+          pip install "requests==2.34.2"
+
+      - name: modify metadata file
+        id: modify-file
+        env:
+          ISSUE_BODY: |
+              ${{ github.event.issue.body }}
+          # pipe preseves newline properties for multilines
+        run: python scripts/modify_metadata_conf.py
+        continue-on-error: true
+
+      - name: return issues to user
+        id: check-issues
+        if: steps.modify-file.outcome == 'failure'
+        run: |
+          gh issue comment "$NUMBER" --body "$BODY"
+          echo "NOTE: Script failure has occured due to user input error. The user has been notified and instructed to 
+          resubmit a corrected form. No further action required..."
+          echo "input_error=true" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: >
+            Your metadata file contains incorrect or improperly formatted fields. 
+            Please re submit your form and amend the following issues:
+            ${{ steps.create-file.outputs.errors }}.
+            ${{ steps.create-file.outputs.warnings }}.
+
+            If you believe this to be an error, please contact a member of the CDDS team.
+
+            Thank you for your contribution.
+
+      - name: create PR 
+        run: | 
+          branch="update-metadata-#${{ github.event.issue.number }}"
+          git checkout -b "$branch"
+          
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+
+          git add *.cfg
+          git commit -m "Workflow metadata file modified from issue #${{ github.event.issue.number }}"
+          git push origin "$branch"
+          
+          gh pr create \
+            --title "Request to update existing metadata from issue #${{ github.event.issue.number }}" \
+            --body "Request to update existing metadata configuration file from issue form:
+                    -----------------------------------------------------
+                    User: ${{ github.actor }} 
+                    Issue title: ${{ github.event.issue.title }}
+                    Issue ID: ${{ github.event.issue.number }}
+                    Filename: ${{ steps.create-file.outputs.filename }}"  \
+            --base main \
+            --head $(git rev-parse --abbrev-ref HEAD)
+
+          gh issue comment "$NUMBER" --body "$BODY"
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          BODY: >
+            ${{ steps.create-file.outputs.warnings }}.
+
+            A pull request has been opened to review your changes.
+            
+            Please do NOT merge this pull request without review from a CDDS team member.
+
+            Thank you for your contribution.
