@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2025, Met Office.
+# (C) British Crown Copyright 2025-2026, Met Office.
 # Please see LICENSE.md for license details.
 
 name: "Process new metadata entry"
@@ -157,34 +157,18 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: create PR 
+      - name: point to modify form and close issue
         if: steps.diff.outputs.changed == 'true' && steps.check-issues.outputs.input_error != 'true'
         run: | 
-          branch="update-metadata-#${{ github.event.issue.number }}"
-          git checkout -b "$branch"
-          
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
 
-          git add *.cfg
-          git commit -m "New workflow metadata file added from issue #${{ github.event.issue.number }}"
-          git push origin "$branch"
-          
-          gh pr create \
-            --title "Request to update existing metadata from issue #${{ github.event.issue.number }}" \
-            --body "Request to update existing metadata configuration file from issue form:
-                    -----------------------------------------------------
-                    User: ${{ github.actor }} 
-                    Issue title: ${{ github.event.issue.title }}
-                    Issue ID: ${{ github.event.issue.number }}
-                    Filename: ${{ steps.create-file.outputs.filename }}"  \
-            --base main \
-            --head $(git rev-parse --abbrev-ref HEAD)
-
           gh issue comment "$NUMBER" --body "$BODY"
+          gh issue close --repo "$REPO" --comment "Closing issue $ISSUE" "$ISSUE"
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
           BODY: >
             ${{ steps.create-file.outputs.warnings }}.
 
@@ -192,11 +176,7 @@ jobs:
             A different version of this metadata file already exists, you can view the existing file here: 
             [${{ steps.create-file.outputs.filename }}](https://github.com/UKNCSP/CDDS-simulation-metadata/tree/main/${{ steps.create-file.outputs.filename }}).
 
-            A pull request has been opened to review your changes.
-            
-            Please do NOT merge this pull request without review from a CDDS team member.
-
-            Thank you for your contribution.
+            To modify the existing file, please fill out the `Modify Workflow Metadata` issue form [here](https://github.com/UKNCSP/CDDS-simulation-metadata/issues/new?template=modify_workflow_metadata.yml)
         
       - name: notify user of duplicate and close issue
         if: steps.diff.outputs.changed == 'false' && steps.check-issues.outputs.input_error != 'true'
