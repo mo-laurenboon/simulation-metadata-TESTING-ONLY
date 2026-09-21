@@ -74,3 +74,38 @@ def process_metadata(match: list) -> dict[str, str]:
             meta_dict[key] = ""
 
     return meta_dict
+
+
+def format_message(msg: dict[str, str], msg_type) -> str:
+    """Formats the a human readable warning message to be returned to the user in the comments of the issue but the
+    GitHub Actions bot.
+
+    Parameters
+    ----------
+    msg : dict[str, str]
+        A dictionary containing any messages to be returned to the user.
+    msg_type: str
+        The type of message. Error or warning.
+
+    Returns
+    -------
+    str
+        A human readable message detailing all warnings.
+    """
+    warnings = []
+    for key, value in msg.items():
+        clean_key = key.strip().capitalize().replace("_", " ")
+        if isinstance(value, list):
+            for item in value:
+                list_value = item
+                clean_value = list_value.strip().replace("_", " ")
+                warning = clean_key + " " + msg_type + ": " + clean_value + "."
+                warnings.append(warning)
+        else:
+            clean_value = value.strip().replace("_", " ")
+            warning = clean_key + " " + msg_type + ": " + clean_value + "."
+            warnings.append(warning)
+
+    warning_str = "\n".join(warnings)
+
+    return warning_str
