@@ -257,6 +257,7 @@ class Validate:
         # Check whether the end date matches the year given in the CVs. This should only produce a warning.
         cv_end_year = experiment_cv_info["end_year"]
         if cv_end_year:
+            cv_end_year = int(cv_end_year) + 1
             end_year = self.metadata_info["data"].get("end_date").split("-")[0]
             if str(end_year) != str(cv_end_year):
                 self.warnings["end_date"] = ("end date does not match the value in the CVs. Expected an end year of "
