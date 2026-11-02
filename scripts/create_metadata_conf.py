@@ -129,21 +129,17 @@ def sort_to_categories(meta_dict: dict[str, str]) -> dict:
     return organised_metadata
 
 
-def format_cfg_file(output_file: Path, errors: list, organised_metadata: dict[str, str]) -> None:
+def format_cfg_file(output_file: Path, organised_metadata: dict[str, str]) -> None:
     """Writes the cleaned, organised and validated metadata to a structured configuration file.
 
     Parameters
     ----------
     output_file : Path
         The complete path of the output file.
-    errors: list
-        A list containing any errors.
     organised_metadata : dict[str, str]
         A cleaned, organised dictionary containing the validated metadata keys and values from the issue form.
     """
     with open(output_file, "w") as f:
-        if errors:
-            f.write(f"# WARNING: This metadata was force merged by passing validation errors {errors}")
         for key, value in organised_metadata.items():
             f.write(f"[{key}]\n")
             if isinstance(value, dict):
@@ -194,7 +190,7 @@ def main() -> None:
         with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
             gh.write(f"filename={output_file}")
 
-        format_cfg_file(output_file, errors, organised_metadata)
+        format_cfg_file(output_file, organised_metadata)
         print(f"Saving metadata file as {output_file}...  SUCCESSFUL")  # Printed to the action logs for debugging
 
     else:
@@ -203,7 +199,10 @@ def main() -> None:
         print(errors_msg)  # Printed to the action logs for debugging purposes
         # Note any warnings to be provided to the user in the issue comments by the GitHub Actions bot. This must be
         # written to the the github env in a way that can be interpreted rather than read line by line.
-        format_cfg_file(output_file, errors, organised_metadata)
+        organised_metadata["ADDITIONAL INFO"]["notes"] = (organised_metadata["ADDITIONAL INFO"]["notes"] +
+                                                          " !!!WARNING: This metadata was merged by force bypassing "
+                                                          f"{errors} ")
+        format_cfg_file(output_file, organised_metadata)
         with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
             gh.write(f"errors<<{delimiter}\n")
             gh.write(f"{errors_msg}\n")
