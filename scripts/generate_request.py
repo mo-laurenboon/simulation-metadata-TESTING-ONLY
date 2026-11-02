@@ -177,7 +177,7 @@ def update_request(request: dict, config: ConfigParser, issue_info: dict) -> dic
     return request
 
 
-def validate_request(request: dict) -> None:
+def validate_request(request: dict) -> list:
     """Validates the request file content against the cmor CMIP7 cvs.
 
     Parameters
@@ -186,10 +186,10 @@ def validate_request(request: dict) -> None:
         request: dict
         The fully populated request template fields and values as a dictionary.
 
-    Raises
+    Returns
     -------
-    RuntimeError
-        If any request file content cannot be validated against cvs.
+    list
+        A list containing any validation errors
     """
     cv = CMOR_CV_JSON
     cv_errors = []
@@ -211,8 +211,7 @@ def validate_request(request: dict) -> None:
         if request["metadata"]["parent_mip"] not in experiment_cv_info["parent_activity_id"]:
             cv_errors.append(f"parent mip does not match one of the expected values given in the cvs")
 
-    if cv_errors:
-        raise RuntimeError(f"Unable to valdidate request file against cvs:\n{cv_errors}")
+    return cv_errors
 
 
 def write_request(filename_prefix, data: SectionProxy, request: dict) -> str:
@@ -278,13 +277,14 @@ def generate_request_config() -> None:
 
     # Populate the request template with values from the workflow metadata config file and re validate where possible.
     update_request(request, config, issue_info)
-    validate_request(request)
+    errors = validate_request(request)
     filename = write_request(filename_prefix, config["data"], request)
 
     # Note the relative path to the generated request and assocaited variable list to help with user navigation.
     with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
         gh.write(f"var_list={request['data']['variable_list_file'].replace("<UPDATE_WITH_PATH>/", "")}\n")
         gh.write(f"request_filename={filename}")
+        gh.write(f"errors={errors}")
 
 
 if __name__ == "__main__":
