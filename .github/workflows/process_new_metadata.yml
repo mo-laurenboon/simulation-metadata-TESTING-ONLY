@@ -76,7 +76,7 @@ jobs:
         id: exists
         run: |
           if git ls-tree -r HEAD --name-only | grep -q "${{ steps.create-file.outputs.filename }}"; then
-            echo git ls-tree -r HEAD --name-only
+            echo "${{ steps.create-file.outputs.filename }}"
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "exists=true"
           else
@@ -85,7 +85,7 @@ jobs:
           fi
 
       - name: generate variable list
-        if: (steps.exists.outputs.exists == 'false' && steps.check-issues.outputs.input_error != 'true') || (steps.exists.outputs.exists == 'false' && contains(github.event.issue.labels.*.name, 'force_merge'))
+        if: steps.exists.outputs.exists == 'false' && (steps.check-issues.outputs.input_error == 'false' || contains(github.event.issue.labels.*.name, 'force_merge'))
         id: generate-variable-list
         env:
           ISSUE_BODY: |
