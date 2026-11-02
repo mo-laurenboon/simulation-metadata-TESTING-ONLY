@@ -67,7 +67,7 @@ jobs:
             If you believe this to be an error, please contact a member of the CDDS team.
 
       - name: commit and push
-        if: steps.create-file.outcome == 'success'
+        if: steps.create-file.outcome == 'success' || contains(github.event.issue.labels.*.name, 'force_merge')
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
