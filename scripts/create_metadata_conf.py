@@ -197,6 +197,7 @@ def main() -> None:
         print("Validating issue form inputs...  FAILED")  # Printed to the action logs for debugging purposes
         errors = format_message(errors, "error")
         print(errors)  # Printed to the action logs for debugging purposes
+        format_cfg_file(output_file, organised_metadata)
         # Note any warnings to be provided to the user in the issue comments by the GitHub Actions bot. This must be
         # written to the the github env in a way that can be interpreted rather than read line by line.
         with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
