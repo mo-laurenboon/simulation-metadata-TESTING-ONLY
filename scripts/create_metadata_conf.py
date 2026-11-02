@@ -203,6 +203,7 @@ def main() -> None:
             gh.write(f"errors<<{delimiter}\n")
             gh.write(f"{errors}\n")
             gh.write(f"{delimiter}\n")
+            gh.write(f"filename={output_file}")
 
         sys.exit(1)
 
