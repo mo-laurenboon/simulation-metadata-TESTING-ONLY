@@ -289,6 +289,9 @@ def generate_request_config() -> None:
         gh.write(f"{errors}\n")
         gh.write(f"{delim}\n")
 
+    if errors:
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     generate_request_config()
