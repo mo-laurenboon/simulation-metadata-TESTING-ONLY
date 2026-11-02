@@ -279,12 +279,15 @@ def generate_request_config() -> None:
     update_request(request, config, issue_info)
     errors = validate_request(request)
     filename = write_request(filename_prefix, config["data"], request)
+    delim = "EOF"
 
     # Note the relative path to the generated request and assocaited variable list to help with user navigation.
     with open(os.environ["GITHUB_OUTPUT"], "a") as gh:
         gh.write(f"var_list={request['data']['variable_list_file'].replace("<UPDATE_WITH_PATH>/", "")}\n")
-        gh.write(f"request_filename={filename}")
-        gh.write(f"errors={errors}")
+        gh.write(f"request_filename={filename}\n")
+        gh.write(f"errors<<{delim}\n")
+        gh.write(f"{errors}\n")
+        gh.write(f"{delim}\n")
 
 
 if __name__ == "__main__":
