@@ -183,6 +183,7 @@ def main():
             gh.write(f"warnings<<{delimiter}\n")
             gh.write(f"{warnings}\n")
             gh.write(f"{delimiter}\n")
+            gh.write(f"filename={filename}")
 
     if not validation_result.errors:
         print("Validating inputs...  SUCCESSFUL")  # Printed to the action logs for debugging
@@ -203,6 +204,7 @@ def main():
             gh.write(f"errors<<{delimiter}\n")
             gh.write(f"{errors}\n")
             gh.write(f"{delimiter}\n")
+            gh.write(f"filename={filename}")
 
         sys.exit(1)
 
