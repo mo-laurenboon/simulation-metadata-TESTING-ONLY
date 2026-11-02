@@ -74,7 +74,7 @@ jobs:
             Thank you for your contribution.
 
       - name: create PR
-        if: steps.modify-file.outcome != 'failure'
+        if: steps.modify-file.outcome != 'failure' || contains(github.event.issue.labels.*.name, 'force_merge')
         run: | 
           branch="update-metadata-#${{ github.event.issue.number }}"
           git checkout -b "$branch"
