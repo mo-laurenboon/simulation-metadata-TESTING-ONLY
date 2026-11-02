@@ -84,7 +84,7 @@ jobs:
           fi
 
       - name: generate variable list
-        if: steps.exists.outputs.exists == 'false' && (steps.check-issues.outputs.input_error == 'false' || contains(github.event.issue.labels.*.name, 'force_merge'))
+        if: (steps.exists.outputs.exists == 'false' && steps.check-issues.outputs.input_error == 'false') || (steps.exists.outputs.exists == 'false' && contains(github.event.issue.labels.*.name, 'force_merge'))
         id: generate-variable-list
         env:
           ISSUE_BODY: |
