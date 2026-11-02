@@ -73,6 +73,21 @@ jobs:
 
             Thank you for your contribution.
 
+      - name: warn of force merge
+        if: contains(github.event.issue.labels.*.name, 'force_merge')
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+
+          gh issue comment "$ISSUE" --body "$BODY"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          BODY: >
+            WARNING: FORCE MERGE HAS BEEN APPLIED
+
+            This means that this will open a PR even if it fails validation checks. This should only be applied by CDDS team members ONLY.
+
       - name: create PR
         if: steps.modify-file.outcome != 'failure' || contains(github.event.issue.labels.*.name, 'force_merge')
         run: | 
