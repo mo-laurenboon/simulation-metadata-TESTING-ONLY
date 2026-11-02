@@ -76,6 +76,7 @@ jobs:
         id: exists
         run: |
           if git ls-tree -r HEAD --name-only | grep -q "${{ steps.create-file.outputs.filename }}"; then
+            echo git ls-tree -r HEAD --name-only
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "exists=true"
           else
