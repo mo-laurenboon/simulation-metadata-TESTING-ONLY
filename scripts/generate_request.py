@@ -214,7 +214,7 @@ def validate_request(request: dict) -> list:
     return cv_errors
 
 
-def write_request(filename_prefix, data: SectionProxy, request: dict) -> str:
+def write_request(filename_prefix, data: SectionProxy, request: dict, errors: list) -> str:
     """Writes out the fully populated REQUEST TEMPLATE dictionary to a configuration file format.
 
     Parameters
@@ -223,6 +223,8 @@ def write_request(filename_prefix, data: SectionProxy, request: dict) -> str:
         The data section of the workflow metadata configuration file.
     request: dict
         The fully populated request template fields and values as a dictionary.
+    errors: list
+        A list containing any errors flagged in validation
 
     Returns
     -------
@@ -231,6 +233,8 @@ def write_request(filename_prefix, data: SectionProxy, request: dict) -> str:
     """
     filename = f"{filename_prefix}_request_{data['model_workflow_id']}_{request['common']['package']}.cfg"
     with open(Path("requests") / filename, "w") as f:
+        if errors:
+            f.write(f"# WARNING: This request was merged by force, bypassing {errors}")
         f.write(f"# At the point of request generation the latest CDDS release is {LATEST_CDDS_RELEASE}.\n")
         f.write("# You can activate this by running the command `source ~cdds/bin/setup_env_for_cdds "
                 f"{LATEST_CDDS_RELEASE.lstrip('v')}`\n")
@@ -278,7 +282,7 @@ def generate_request_config() -> None:
     # Populate the request template with values from the workflow metadata config file and re validate where possible.
     update_request(request, config, issue_info)
     errors = validate_request(request)
-    filename = write_request(filename_prefix, config["data"], request)
+    filename = write_request(filename_prefix, config["data"], request, errors)
     delim = "EOF"
 
     # Note the relative path to the generated request and assocaited variable list to help with user navigation.
