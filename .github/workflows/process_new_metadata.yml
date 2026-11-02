@@ -72,7 +72,7 @@ jobs:
             Thank you for your contribution.
 
       - name: check if file exists
-        if: steps.check-issues.outputs.input_error != 'true'
+        if: steps.check-issues.outputs.input_error != 'true' || contains(github.event.issue.labels.*.name, 'force_merge')
         id: exists
         run: |
           if git ls-tree -r HEAD --name-only | grep -q "${{ steps.create-file.outputs.filename }}"; then
@@ -84,7 +84,7 @@ jobs:
           fi
 
       - name: generate variable list
-        if: steps.exists.outputs.exists == 'false' && steps.check-issues.outputs.input_error != 'true'
+        if: steps.exists.outputs.exists == 'false' && (steps.check-issues.outputs.input_error != 'true' || contains(github.event.issue.labels.*.name, 'force_merge'))
         id: generate-variable-list
         env:
           ISSUE_BODY: |
@@ -118,8 +118,23 @@ jobs:
 
             Please DO NOT close this issue unless advised by a member of the CDDS team. 
 
+      - name: warn of force merge
+        if: contains(github.event.issue.labels.*.name, 'force_merge')
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+
+          gh issue comment "$ISSUE" --body "$BODY"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          BODY: >
+            WARNING: FORCE MERGE HAS BEEN APPLIED
+
+            This means that this metadata will be merged even if it fails validation checks. This should only be applied by CDDS team members ONLY.
+
       - name: commit new file and close issue
-        if: steps.exists.outputs.exists == 'false' && steps.check-issues.outputs.input_error != 'true' && steps.generate-variable-list.outcome == 'success'
+        if: steps.exists.outputs.exists == 'false' && (steps.check-issues.outputs.input_error != 'true' || contains(github.event.issue.labels.*.name, 'force_merge')) && steps.generate-variable-list.outcome == 'success'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
@@ -159,7 +174,7 @@ jobs:
           fi
 
       - name: point to modify form and close issue
-        if: steps.diff.outputs.changed == 'true' && steps.check-issues.outputs.input_error != 'true'
+        if: steps.diff.outputs.changed == 'true' && (steps.check-issues.outputs.input_error != 'true' || contains(github.event.issue.labels.*.name, 'force_merge'))
         run: | 
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
@@ -180,7 +195,7 @@ jobs:
             To modify the existing file, please fill out the `Modify Workflow Metadata` issue form [here](https://github.com/UKNCSP/CDDS-simulation-metadata/issues/new?template=modify_workflow_metadata.yml)
         
       - name: notify user of duplicate and close issue
-        if: steps.diff.outputs.changed == 'false' && steps.check-issues.outputs.input_error != 'true'
+        if: steps.diff.outputs.changed == 'false' && (steps.check-issues.outputs.input_error != 'true' || contains(github.event.issue.labels.*.name, 'force_merge'))
         run: |
           gh issue comment "$ISSUE" --body "$BODY"
           gh issue close --repo "$REPO" --comment "Closing issue $ISSUE" "$ISSUE"
