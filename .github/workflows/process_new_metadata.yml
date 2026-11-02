@@ -76,7 +76,6 @@ jobs:
         id: exists
         run: |
           if git ls-tree -r HEAD --name-only | grep -q "${{ steps.create-file.outputs.filename }}"; then
-            echo "${{ steps.create-file.outputs.filename }}"
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "exists=true"
           else
@@ -166,7 +165,7 @@ jobs:
           
       - name: check diff
         id: diff
-        if: steps.exists.outputs.exists == 'true' && steps.check-issues.outputs.input_error != 'true'
+        if: steps.exists.outputs.exists == 'true' && (steps.check-issues.outputs.input_error != 'true' || contains(github.event.issue.labels.*.name, 'force_merge'))
         run: |
           if git diff --quiet HEAD -- ${{ steps.create-file.outputs.filename}}; then
             echo "changed=false" >> $GITHUB_OUTPUT
